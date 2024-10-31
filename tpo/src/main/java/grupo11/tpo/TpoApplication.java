@@ -21,9 +21,12 @@ public class TpoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		Hotel hoteljava = new Hotel("Universal7","Florida 23","2213516","disney@algo.com","Florida");
+		hotelService.guardarHotel(hoteljava);
 		for (Hotel hotel : hotelRepository.findAll()) {
-			System.out.println(hotel.getNombre());
+			System.out.println(hotel.getName()+" "+hotel.getId());
 		}
+		hotelRepository.deleteByName("Universal6");
 	}
 
 }

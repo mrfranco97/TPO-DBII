@@ -9,17 +9,25 @@ import org.springframework.data.neo4j.core.schema.Node;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Node("Hotel")
 public class Hotel {
-    @Id
     @GeneratedValue
+    @Id
     private Long id;
-    private String nombre;
-    private String direccion;
-    private String telefono;
-    private String correo;
-    private String ubicacion;
 
-    public Hotel(String theContinental, String s, String mail, String paternal) {
+    private String name;
+    private String address;
+    private String phone;
+    private String mail;
+    private String location;
+
+    public Hotel(String nombre, String direccion, String telefono, String correo, String ubicacion) {
+        this.name = nombre;
+        this.address = direccion;
+        this.phone = telefono;
+        this.mail = correo;
+        this.location = ubicacion;
     }
+
 }

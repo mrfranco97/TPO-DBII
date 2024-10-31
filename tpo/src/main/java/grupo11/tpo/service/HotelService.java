@@ -10,7 +10,12 @@ public class HotelService {
     @Autowired
     HotelRepository hotelRepo;
 
-    public Hotel guardarHotel(Hotel hotel) {
-        return hotelRepo.save(hotel);
+    public void guardarHotel(Hotel hotel) {
+        hotelRepo.save(hotel);
     }
+
+    public void eliminarHotel(String name) {
+        hotelRepo.deleteByName(name);
+    }
+
 }
