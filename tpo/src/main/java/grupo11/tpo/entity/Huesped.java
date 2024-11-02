@@ -1,5 +1,5 @@
 package grupo11.tpo.entity;
-
-@Collection("Huesped")
+import org.springframework.data.mongodb.
+@Document(collection="Huesped")
 public class Huesped {
 }
