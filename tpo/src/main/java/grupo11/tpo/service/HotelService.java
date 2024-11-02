@@ -18,7 +18,7 @@ public class HotelService {
 
     public void eliminarHotel(String name) {
         hotelRepo.deleteByName(name);
-    }
+    }//Habria que meterle comprobaciones
 
     public Object modificarHotel(Long id,String name, String address,String phone,String mail, String location){
         Optional<Hotel> aux=hotelRepo.findById(id);
