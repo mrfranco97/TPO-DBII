@@ -14,6 +14,7 @@ public class HotelService {
 
     public void guardarHotel(Hotel hotel) {
         hotelRepo.save(hotel);
+        System.out.println("Se agrego correctamente");
     }
 
     public void eliminarHotel(String name) {

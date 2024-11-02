@@ -61,28 +61,7 @@ public class TpoApplication implements CommandLineRunner {
 					System.out.println("Opción no válida. Intente nuevamente.");
 			}
 		} while (option != 0);
-
 		scanner.close();
-		/*Huesped huespedjava = new Huesped("Juan23","Monroe 123","45564455","juan@algo.com");
-		huespedService.guardarHuesped(huespedjava);
-		for (Huesped huesped : huespedService.obtenerHuespedes()) {
-			System.out.println(huesped.getName()+" "+huesped.getId());
-		}
-		System.out.println(huespedService.modificarHuesped("67266104452d354a468c8583","Carlos","","123456","Carlos@gmail.com"));
-
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Ingrese fecha inicio (formato: yyyy-MM-dd):");
-		String inicio = scanner.nextLine();
-		LocalDate fecha_ini = LocalDate.parse(inicio, DateTimeFormatter.ISO_LOCAL_DATE);
-		System.out.println("Fecha ingresada: " + fecha_ini);
-		System.out.println("Ingrese fecha fin (formato: yyyy-MM-dd):");
-		String fin = scanner.nextLine();
-			// Convierte la cadena a LocalDate
-		LocalDate fecha_fin = LocalDate.parse(fin, DateTimeFormatter.ISO_LOCAL_DATE);
-		System.out.println("Fecha ingresada: " + fecha_fin);
-		Reserva reserva = new Reserva(fecha_ini,fecha_fin,666L);
-		huespedService.agregarReservaAlHuesped("672661fb8d993413df08456a",reserva);*/
-
 	}
 
 }
