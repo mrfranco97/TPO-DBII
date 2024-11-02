@@ -1,5 +1,6 @@
 package grupo11.tpo;
 
+import grupo11.tpo.component.OperacionesMenu;
 import grupo11.tpo.entity.Hotel;
 import grupo11.tpo.entity.Huesped;
 import grupo11.tpo.entity.Reserva;
@@ -26,21 +27,48 @@ public class TpoApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	private HotelService hotelService;
-	@Autowired
-	private HotelRepository hotelRepository;
-
-	@Autowired
-	HuespedService huespedService;
+	private OperacionesMenu operacionesMenu;
 
 	@Override
 	public void run(String... args) throws Exception {
+		Scanner scanner = new Scanner(System.in);
+		int option;
+
+		do {
+			System.out.println("Bienvenido al Sistema de Gestión Hotelera");
+			System.out.println("Seleccione una opción:");
+			System.out.println("1. Gestión de Hoteles");
+			System.out.println("2. Gestión de Huéspedes");
+			System.out.println("3. Búsqueda y Consulta");
+			System.out.println("0. Salir");
+
+			option = scanner.nextInt();
+
+			switch (option) {
+				case 1:
+					operacionesMenu.gestionarHoteles(scanner);
+					break;
+				case 2:
+					operacionesMenu.gestionarHuespedes(scanner);
+					break;
+				case 3:
+					operacionesMenu.busquedaConsulta(scanner);
+					break;
+				case 0:
+					System.out.println("Saliendo del sistema...");
+					break;
+				default:
+					System.out.println("Opción no válida. Intente nuevamente.");
+			}
+		} while (option != 0);
+
+		scanner.close();
 		/*Huesped huespedjava = new Huesped("Juan23","Monroe 123","45564455","juan@algo.com");
 		huespedService.guardarHuesped(huespedjava);
 		for (Huesped huesped : huespedService.obtenerHuespedes()) {
 			System.out.println(huesped.getName()+" "+huesped.getId());
 		}
-		System.out.println(huespedService.modificarHuesped("67266104452d354a468c8583","Carlos","","123456","Carlos@gmail.com"));*/
+		System.out.println(huespedService.modificarHuesped("67266104452d354a468c8583","Carlos","","123456","Carlos@gmail.com"));
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Ingrese fecha inicio (formato: yyyy-MM-dd):");
@@ -53,7 +81,7 @@ public class TpoApplication implements CommandLineRunner {
 		LocalDate fecha_fin = LocalDate.parse(fin, DateTimeFormatter.ISO_LOCAL_DATE);
 		System.out.println("Fecha ingresada: " + fecha_fin);
 		Reserva reserva = new Reserva(fecha_ini,fecha_fin,666L);
-		huespedService.agregarReservaAlHuesped("672661fb8d993413df08456a",reserva);
+		huespedService.agregarReservaAlHuesped("672661fb8d993413df08456a",reserva);*/
 
 	}
 
