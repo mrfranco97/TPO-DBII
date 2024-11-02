@@ -4,6 +4,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,11 +20,15 @@ public class Huesped {
     private String address;
     private String phone;
     private String mail;
+    private List<Reserva> reservas = new ArrayList<Reserva>();
 
-    public Huesped(String nombre, String direccion, String telefono, String correo) {
-        this.name = nombre;
-        this.address = direccion;
-        this.phone = telefono;
-        this.mail = correo;
+    public Huesped(String name, String address, String phone, String mail) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.mail = mail;
+    }
+    public void addReserva(Reserva reserva) {
+        this.reservas.add(reserva);
     }
 }

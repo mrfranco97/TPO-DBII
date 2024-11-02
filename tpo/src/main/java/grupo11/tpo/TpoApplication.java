@@ -28,12 +28,12 @@ public class TpoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Huesped huespedjava = new Huesped("Juan","Algun lado 123","123123123","juan@algo.com");
+		Huesped huespedjava = new Huesped("Juan23","Monroe 123","45564455","juan@algo.com");
 		huespedService.guardarHuesped(huespedjava);
-		/*for (Huesped huesped : hotelRepository.findAll()) {
+		for (Huesped huesped : huespedService.obtenerHuespedes()) {
 			System.out.println(huesped.getName()+" "+huesped.getId());
 		}
-		System.out.println(hotelService.modificarHotel(25L,"Six Flags","Algun lado mas","11526588","sixflags@gmail.com","Orlando"));*/
+		System.out.println(huespedService.modificarHuesped("67266104452d354a468c8583","Carlos","","123456","Carlos@gmail.com"));
 
 	}
 
