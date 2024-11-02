@@ -26,7 +26,8 @@ public class TpoApplication implements CommandLineRunner {
 		for (Hotel hotel : hotelRepository.findAll()) {
 			System.out.println(hotel.getName()+" "+hotel.getId());
 		}
-		hotelRepository.deleteByName("Universal6");
+		System.out.println(hotelService.modificarHotel(25L,"Six Flags","Algun lado mas","11526588","sixflags@gmail.com","Orlando"));
+
 	}
 
 }
