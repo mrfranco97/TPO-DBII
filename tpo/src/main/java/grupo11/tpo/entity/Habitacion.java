@@ -17,7 +17,7 @@ public class Habitacion {
     private List<Amenity> amenities = new ArrayList<>();  // Lista de amenities
     private boolean disponible = true;  // Disponibilidad
 
-    public Habitacion(Long id, String tipo, int capacidad, List<Amenity> amenities, boolean disponible) {
+    public Habitacion(Long id, String tipo, int capacidad, boolean disponible) {
         this.id = id;
         this.tipo = tipo;
         this.capacidad = capacidad;

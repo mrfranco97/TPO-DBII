@@ -4,7 +4,6 @@ import grupo11.tpo.entity.Amenity;
 import grupo11.tpo.repository.AmenityRepository;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Service;
 
