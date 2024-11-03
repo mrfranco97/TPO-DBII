@@ -133,7 +133,6 @@ public class OperacionesMenu {
 
     public void busquedaConsulta(Scanner scanner) {
         // Implementar lógica para búsqueda y consulta
-        this.scanner = scanner;
     }
 
 
