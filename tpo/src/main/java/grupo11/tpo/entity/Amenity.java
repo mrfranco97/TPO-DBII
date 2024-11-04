@@ -3,14 +3,18 @@ package grupo11.tpo.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
+import org.springframework.data.neo4j.core.schema.Id;
+import org.springframework.data.neo4j.core.schema.Node;
 
-@AllArgsConstructor
 @Data
 @NoArgsConstructor
-@Document("Amenity")
-
+@AllArgsConstructor
+@Node("Amenity")
 public class Amenity {
+    @GeneratedValue
+    @Id
+    private Long id;
     private String name;
     private String description;
 

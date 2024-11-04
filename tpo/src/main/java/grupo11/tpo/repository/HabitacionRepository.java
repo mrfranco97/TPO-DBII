@@ -1,16 +1,12 @@
 package grupo11.tpo.repository;
 
 import grupo11.tpo.entity.Habitacion;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
+import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-import java.util.List;
-
 @Repository
-public interface HabitacionRepository extends MongoRepository<Habitacion, Long> {
-
-    @Query("{ 'disponible': true, 'reservas': { $not: { $elemMatch: { 'fechaInicio': { $lt: ?1 }, 'fechaFin': { $gt: ?0 } } } } }")
-    List<Habitacion> buscarDisponiblesPorFechas(Date fechaInicio, Date fechaFin);
+public interface HabitacionRepository extends Neo4jRepository<Habitacion, Long> {
+    @Query("MATCH (h:Habitacion {tipo: $tipo}) RETURN h")
+    Habitacion findByTipo(String tipo);
 }

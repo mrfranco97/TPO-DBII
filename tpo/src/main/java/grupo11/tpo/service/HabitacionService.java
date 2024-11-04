@@ -2,54 +2,33 @@ package grupo11.tpo.service;
 
 import grupo11.tpo.entity.Habitacion;
 import grupo11.tpo.repository.HabitacionRepository;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 @Service
-@EnableMongoRepositories
 public class HabitacionService {
-
-    @Setter
-    @Getter
-    private Set<Habitacion> habitaciones;
-
     @Autowired
     private HabitacionRepository habitacionRepo;
 
-    public HabitacionService() {
-        this.habitaciones = new HashSet<>();
-    }
-
     public void guardarHabitacion(Habitacion habitacion) {
-        this.habitaciones.add(habitacion);
-        this.habitacionRepo.save(habitacion);
+        habitacionRepo.save(habitacion);
+        System.out.println("Habitación guardada correctamente.");
     }
 
     public void eliminarHabitacion(Long id) {
-        Habitacion habitacion = this.habitacionRepo.findById(id).orElse(null);
-        if (habitacion != null) {
-            this.habitaciones.remove(habitacion);
-            this.habitacionRepo.delete(habitacion);
-        }
+        habitacionRepo.deleteById(id);
     }
 
-    public void actualizarDisponibilidad(Long id, boolean disponibilidad) {
-        Habitacion habitacion = this.habitacionRepo.findById(id).orElse(null);
-        if (habitacion != null) {
-            habitacion.setDisponible(disponibilidad);
-            this.habitacionRepo.save(habitacion);
-        }
-    }
-
-    public List<Habitacion> buscarHabitacionesDisponibles(Date fechaInicio, Date fechaFin) {
-        return this.habitacionRepo.buscarDisponiblesPorFechas(fechaInicio, fechaFin);
+    public Optional<Habitacion> modificarHabitacion(Long id, String tipo, int capacidad, boolean disponible) {
+        Optional<Habitacion> optionalHabitacion = habitacionRepo.findById(id);
+        optionalHabitacion.ifPresent(habitacion -> {
+            habitacion.setTipo(tipo);
+            habitacion.setCapacidad(capacidad);
+            habitacion.setDisponible(disponible);
+            habitacionRepo.save(habitacion);
+        });
+        return optionalHabitacion;
     }
 }

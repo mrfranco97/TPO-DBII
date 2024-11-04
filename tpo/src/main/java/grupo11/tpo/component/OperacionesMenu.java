@@ -11,6 +11,8 @@ import grupo11.tpo.entity.Amenity;
 import grupo11.tpo.entity.Habitacion;
 import grupo11.tpo.service.AmenityService;
 import grupo11.tpo.service.HabitacionService;
+import java.util.Optional;
+import java.util.Scanner;
 
 
 import java.util.Date;
@@ -136,114 +138,120 @@ public class OperacionesMenu {
         this.scanner = scanner;
     }
 
-
+    ////////////////////////////////7
     public void gestionarAmenities(Scanner scanner) {
-        int option;
+        int opcion;
         do {
-            System.out.println("Gestión de Amenities");
-            System.out.println("1. Alta de Amenity");
-            System.out.println("2. Baja de Amenity");
-            System.out.println("3. Modificar Amenity");
-            System.out.println("4. Consultar Amenity");
+            System.out.println("Gestión de Amenities:");
+            System.out.println("1. Agregar Amenity");
+            System.out.println("2. Modificar Amenity");
+            System.out.println("3. Eliminar Amenity");
             System.out.println("0. Volver al menú principal");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Consumir nueva línea
 
-            option = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (option) {
+            switch (opcion) {
                 case 1:
-                    System.out.println("Ingrese el nombre del amenity:");
-                    String name = scanner.nextLine();
-                    System.out.println("Ingrese la descripcion del amenity:");
-                    String description = scanner.nextLine();
-                    Amenity amenity = new Amenity(name, description);
-                    amenityService.guardarAmenity(amenity);
-                    System.out.println("Amenity guardado.");
+                    System.out.print("Ingrese el nombre del amenity: ");
+                    String nombre = scanner.nextLine();
+                    System.out.print("Ingrese la descripción del amenity: ");
+                    String descripcion = scanner.nextLine();
+                    Amenity nuevoAmenity = new Amenity(nombre, descripcion);
+                    amenityService.guardarAmenity(nuevoAmenity);
                     break;
+
                 case 2:
-                    System.out.println("Ingrese el nombre del amenity a eliminar:");
-                    String nameToDelete = scanner.nextLine();
-                    amenityService.eliminarAmenity(nameToDelete);
-                    System.out.println("Amenity eliminado.");
-                    break;
-                case 3:
-                    System.out.println("Ingrese el nombre del amenity a modificar:");
-                    String nameToUpdate = scanner.nextLine();
-                    System.out.println("Ingrese la nueva descripcion:");
-                    String newDescription = scanner.nextLine();
-                    amenityService.actualizarAmenity(nameToUpdate, newDescription);
-                    System.out.println("Amenity actualizado.");
-                    break;
-                case 4:
-                    System.out.println("Ingrese el nombre del amenity a consultar:");
-                    String nameToConsult = scanner.nextLine();
-                    amenityService.obtenerAmenityPorNombre(nameToConsult)
-                            .ifPresentOrElse(
-                                    a -> System.out.println("Amenity encontrado: " + a),
-                                    () -> System.out.println("Amenity no encontrado.")
-                            );
-                    break;
-                case 0:
-                    System.out.println("Volviendo al menú principal");
-                    break;
-                default:
-                    System.out.println("Opcion no valida. Intente nuevamente.");
-            }
-        } while (option != 0);
-    }
-    public void gestionarHabitaciones() {
-        Scanner scanner = new Scanner(System.in);
-
-        int option;
-        do {
-            System.out.println("Gestión de Habitaciones");
-            System.out.println("1. Alta de Habitación");
-            System.out.println("2. Baja de Habitación");
-            System.out.println("3. Modificar Disponibilidad de Habitación");
-            System.out.println("4. Buscar Habitaciones Disponibles");
-            System.out.println("0. Volver al menú principal");
-
-            option = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (option) {
-                case 1:
-                    System.out.println("Ingrese el ID de la habitación:");
-                    Long id = scanner.nextLong();
+                    System.out.print("Ingrese el ID del amenity a modificar: ");
+                    Long idModAmenity = scanner.nextLong();
                     scanner.nextLine();
-                    System.out.println("Ingrese el tipo de habitación:");
+                    System.out.print("Ingrese el nuevo nombre: ");
+                    String nuevoNombre = scanner.nextLine();
+                    System.out.print("Ingrese la nueva descripción: ");
+                    String nuevaDescripcion = scanner.nextLine();
+                    Optional<Amenity> amenityMod = amenityService.modificarAmenity(idModAmenity, nuevoNombre, nuevaDescripcion);
+                    if (amenityMod.isPresent()) {
+                        System.out.println("Amenity modificado correctamente.");
+                    } else {
+                        System.out.println("Amenity no encontrado.");
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Ingrese el nombre del amenity a eliminar: ");
+                    String nombreEliminar = scanner.nextLine();
+                    amenityService.eliminarAmenity(nombreEliminar);
+                    System.out.println("Amenity eliminado correctamente.");
+                    break;
+
+                case 0:
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+
+                default:
+                    System.out.println("Opción inválida. Intente de nuevo.");
+            }
+        } while (opcion != 0);
+    }
+
+    public void gestionarHabitaciones(Scanner scanner) {
+        int opcion;
+        do {
+            System.out.println("Gestión de Habitaciones:");
+            System.out.println("1. Agregar Habitación");
+            System.out.println("2. Modificar Habitación");
+            System.out.println("3. Eliminar Habitación");
+            System.out.println("0. Volver al menú principal");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Consumir nueva línea
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Ingrese el tipo de habitación: ");
                     String tipo = scanner.nextLine();
-                    System.out.println("Ingrese la capacidad de la habitación:");
+                    System.out.print("Ingrese la capacidad de la habitación: ");
                     int capacidad = scanner.nextInt();
                     scanner.nextLine();
-                    Habitacion habitacion = new Habitacion(id, tipo, capacidad, true);
-                    habitacionService.guardarHabitacion(habitacion);
-                    System.out.println("Habitación guardada.");
+                    System.out.print("¿Está disponible? (true/false): ");
+                    boolean disponible = scanner.nextBoolean();
+                    scanner.nextLine();
+                    Habitacion nuevaHabitacion = new Habitacion(tipo, capacidad, disponible);
+                    habitacionService.guardarHabitacion(nuevaHabitacion);
                     break;
+
                 case 2:
-                    System.out.println("Ingrese el ID de la habitación a eliminar:");
-                    Long idToDelete = scanner.nextLong();
-                    habitacionService.eliminarHabitacion(idToDelete);
-                    System.out.println("Habitación eliminada.");
+                    System.out.print("Ingrese el ID de la habitación a modificar: ");
+                    Long idModHabitacion = scanner.nextLong();
+                    scanner.nextLine();
+                    System.out.print("Ingrese el nuevo tipo: ");
+                    String nuevoTipo = scanner.nextLine();
+                    System.out.print("Ingrese la nueva capacidad: ");
+                    int nuevaCapacidad = scanner.nextInt();
+                    System.out.print("¿Está disponible? (true/false): ");
+                    boolean nuevaDisponibilidad = scanner.nextBoolean();
+                    scanner.nextLine();
+                    Optional<Habitacion> habitacionMod = habitacionService.modificarHabitacion(idModHabitacion, nuevoTipo, nuevaCapacidad, nuevaDisponibilidad);
+                    if (((java.util.Optional<?>) habitacionMod).isPresent()) {
+                        System.out.println("Habitación modificada correctamente.");
+                    } else {
+                        System.out.println("Habitación no encontrada.");
+                    }
                     break;
+
                 case 3:
-                    System.out.println("Ingrese el ID de la habitación a modificar:");
-                    Long idToUpdate = scanner.nextLong();
-                    System.out.println("Ingrese la nueva disponibilidad (true/false):");
-                    boolean disponibilidad = scanner.nextBoolean();
-                    habitacionService.actualizarDisponibilidad(idToUpdate, disponibilidad);
-                    System.out.println("Disponibilidad actualizada.");
+                    System.out.print("Ingrese el ID de la habitación a eliminar: ");
+                    Long idEliminar = scanner.nextLong();
+                    habitacionService.eliminarHabitacion(idEliminar);
+                    System.out.println("Habitación eliminada correctamente.");
                     break;
 
                 case 0:
-                    System.out.println("Volviendo al menú principal");
+                    System.out.println("Volviendo al menú principal...");
                     break;
+
                 default:
-                    System.out.println("Opción no válida. Intente nuevamente.");
+                    System.out.println("Opción inválida. Intente de nuevo.");
             }
-        } while (option != 0);
-
-        scanner.close();
+        } while (opcion != 0);
     }
-}
 
+}

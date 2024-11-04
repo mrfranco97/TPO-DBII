@@ -2,42 +2,45 @@ package grupo11.tpo.service;
 
 import grupo11.tpo.entity.POI;
 import grupo11.tpo.repository.POIRepository;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.Optional;
 
 @Service
 public class POIService {
 
-    @Setter
-    @Getter
-    private Set<POI> pois;
+    @Autowired
+    private POIRepository poiRepo;
 
-    private final POIRepository poiRepo;
+    public List<POI> obtenerTodosLosPOIs() {
+        return poiRepo.findAll();
+    }
 
-    public POIService(POIRepository poiRepo) {
-        this.pois = new HashSet<>();
-        this.poiRepo = poiRepo;
+    public Optional<POI> obtenerPOIPorId(Long id) {
+        return poiRepo.findById(id);
     }
 
     public void guardarPOI(POI poi) {
-        this.pois.add(poi);
-        this.poiRepo.save(poi);
+        poiRepo.save(poi);
+        System.out.println("POI agregado correctamente.");
     }
 
-    public void eliminarPOIPorNombre(String name) {
-        POI poi = this.poiRepo.findByName(name);
-        if (poi != null) {
-            this.pois.remove(poi);
-            this.poiRepo.delete(poi);
-        }
+    public Optional<POI> modificarPOI(Long id, String name, String description, String location) {
+        Optional<POI> optionalPOI = poiRepo.findById(id);
+        optionalPOI.ifPresent(poi -> {
+            poi.setName(name);
+            poi.setDescription(description);
+            poi.setLocation(location);
+            poiRepo.save(poi);
+        });
+        return optionalPOI;
     }
 
-    public List<POI> obtenerPOIsCercanosAHOTEL(String hotelName) {
-        return this.poiRepo.findPOIsNearHotel(hotelName);
+    public void eliminarPOI(Long id) {
+        poiRepo.deleteById(id);
+        System.out.println("POI eliminado correctamente.");
     }
 }
+

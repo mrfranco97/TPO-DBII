@@ -1,9 +1,12 @@
 package grupo11.tpo.repository;
 
 import grupo11.tpo.entity.Amenity;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
+import org.springframework.data.neo4j.repository.query.Query;
+import org.springframework.stereotype.Repository;
 
-public interface AmenityRepository extends MongoRepository<Amenity, String> {
-    Amenity findByName(String name);
+@Repository
+public interface AmenityRepository extends Neo4jRepository<Amenity, Long> {
+    @Query("MATCH (a:Amenity {name: $name}) DELETE a")
     void deleteByName(String name);
 }
