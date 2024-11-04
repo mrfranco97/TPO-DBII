@@ -28,7 +28,7 @@ public class Hotel {
     private String location;
 
     @Relationship(type = "SE_ENCUENTRA_A")
-    private List<SeEncuentraA> poiCercanos= new ArrayList<SeEncuentraA>();;
+    private List<SeEncuentraA> poiCercanos= new ArrayList<SeEncuentraA>();
 
     public Hotel(String nombre, String direccion, String telefono, String correo, String ubicacion) {
         this.name = nombre;
