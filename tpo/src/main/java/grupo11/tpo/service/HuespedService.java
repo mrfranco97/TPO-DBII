@@ -56,4 +56,9 @@ public class HuespedService {
         }
     }
 
+    public Huesped obtenerHuespedPorCorreo(String mail) {
+        System.out.println("Obteniendo detalles de Huesped: " + mail);
+        return huespedRepo.findHuespedByEmail(mail);
+    }
+
 }

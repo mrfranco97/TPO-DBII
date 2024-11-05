@@ -5,6 +5,7 @@ import grupo11.tpo.entity.Huesped;
 import grupo11.tpo.entity.Reserva;
 import grupo11.tpo.service.HotelService;
 import grupo11.tpo.service.HuespedService;
+import grupo11.tpo.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -119,6 +120,33 @@ public class OperacionesMenu {
 
     public void busquedaConsulta(Scanner scanner) {
         // Implementar lógica para búsqueda y consulta
+        int option;
+        do {
+            System.out.println("Busqueda y Consulta");
+            System.out.println("Seleccione una opción:");
+            System.out.println("1. Ver detalles de Huesped");
+            System.out.println("2. Buscar Reservas por Fecha");
+            System.out.println("3. Buscar Reservas por Fecha");
+            System.out.println("0. Volver al menú principal");
+
+            option = scanner.nextInt();
+            scanner.nextLine();
+            switch (option) {
+                case 1:
+                    System.out.println("Ingrese el correo del huesped");
+                    String correo_hues = scanner.nextLine();
+                    huespedService.obtenerHuespedPorCorreo(correo_hues);
+                case 3:
+                    System.out.println("Ingrese el ID de la Reserva");
+                    String id_reserva = scanner.nextLine();
+                    Service.obtenerHuespedPorCorreo(correo_hues);
+                case 0:
+                    System.out.println("Volviendo al menú de huespedes...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente nuevamente.");
+            }
+        } while (option != 0);
     }
 
 }
