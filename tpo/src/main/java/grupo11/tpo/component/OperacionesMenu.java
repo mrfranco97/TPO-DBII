@@ -119,6 +119,29 @@ public class OperacionesMenu {
 
     public void busquedaConsulta(Scanner scanner) {
         // Implementar lógica para búsqueda y consulta
+         int option;
+        do {
+            System.out.println("Busqueda y Consulta");
+            System.out.println("Seleccione una opción:");
+            System.out.println("1. Ver Detalles de Huesped");
+            System.out.println("2. Buscar Reservas Por Fecha");
+            System.out.println("0. Volver al menú principal");
+
+            option = scanner.nextInt();
+            scanner.nextLine();
+            switch (option) {
+                case 2:
+                    System.out.println("Ingresar la fecha de reserva (formato: yyyy-MM-dd): ");
+                    String inicio = scanner.nextLine();
+                    LocalDate fecha_ini = LocalDate.parse(inicio, DateTimeFormatter.ISO_LOCAL_DATE);
+                    reservaService.buscarReservaPorFecha(fecha_ini);
+                case 0:
+                    System.out.println("Volviendo al menú de huespedes...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente nuevamente.");
+            }
+        } while (option != 0);
     }
 
 }
