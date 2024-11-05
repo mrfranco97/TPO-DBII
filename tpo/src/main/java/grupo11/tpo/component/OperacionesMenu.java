@@ -136,6 +136,11 @@ public class OperacionesMenu {
                     System.out.println("Ingrese el correo del huesped");
                     String correo_hues = scanner.nextLine();
                     huespedService.obtenerHuespedPorCorreo(correo_hues);
+                case 2:
+                    System.out.println("Ingresar la fecha de reserva (formato: yyyy-MM-dd): ");
+                    String inicio = scanner.nextLine();
+                    LocalDate fecha_ini = LocalDate.parse(inicio, DateTimeFormatter.ISO_LOCAL_DATE);
+                    reservaService.buscarReservaPorFecha(fecha_ini);
                 case 3:
                     System.out.println("Ingrese el ID de la Reserva");
                     String id_reserva = scanner.nextLine();
