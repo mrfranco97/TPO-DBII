@@ -2,9 +2,11 @@ package grupo11.tpo.component;
 
 import grupo11.tpo.entity.Hotel;
 import grupo11.tpo.entity.Huesped;
+import grupo11.tpo.entity.POI;
 import grupo11.tpo.entity.Reserva;
 import grupo11.tpo.service.HotelService;
 import grupo11.tpo.service.HuespedService;
+import grupo11.tpo.service.POIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,14 +20,17 @@ public class OperacionesMenu {
     private HuespedService huespedService;
     @Autowired
     private HotelService hotelService;
+    @Autowired
+    private POIService poiService;
     public void gestionarHoteles(Scanner scanner) {
         int option;
         do {
-            System.out.println("Gestión de Hoteles");
+            System.out.println("---------------------------Gestión de Hoteles------------------------------");
             System.out.println("Seleccione una opción:");
             System.out.println("1. Alta de Hotel");
             System.out.println("2. Baja de Hotel");
             System.out.println("3. Modificación de Hotel");
+            System.out.println("4. Agregar POI");
             System.out.println("0. Volver al menú principal");
 
             option = scanner.nextInt();
@@ -53,6 +58,19 @@ public class OperacionesMenu {
                 case 3:
                     // Lógica para modificación de hotel
                     break;
+                case 4:
+                    System.out.println("Ingrese el nombre del Hotel:");
+                    String nombre_hotel = scanner.nextLine();
+                    scanner.nextLine();
+                    System.out.println("Ingrese el id del POI:");
+                    Long poi_cod = scanner.nextLong();
+                    scanner.nextLine();
+                    System.out.println("Ingrese la distancia con el POI:");
+                    Double distancia = scanner.nextDouble();
+                    scanner.nextLine();
+                    POI poi=poiService.buscarPOI(poi_cod);
+                    hotelService.agregarPOIalHotel(poi,nombre_hotel,distancia);
+                    break;
                 case 0:
                     System.out.println("Volviendo al menú principal...");
                     break;
@@ -65,7 +83,7 @@ public class OperacionesMenu {
     public void gestionarHuespedes(Scanner scanner) {
         int option;
         do {
-            System.out.println("Gestión de Huespedes");
+            System.out.println("--------------------Gestión de Huespedes--------------------------------");
             System.out.println("Seleccione una opción:");
             System.out.println("1. Alta de Huesped");
             System.out.println("2. Baja de Huesped");
@@ -109,7 +127,40 @@ public class OperacionesMenu {
                     Reserva reserva = new Reserva(fecha_ini,fecha_fin,id_hab);
                     huespedService.agregarReservaAlHuesped(id_hue,reserva);
                 case 0:
-                    System.out.println("Volviendo al menú de huespedes...");
+                    System.out.println("Volviendo al menú de Principal...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente nuevamente.");
+            }
+        } while (option != 0);
+    }
+
+    public void gestionarPOI(Scanner scanner) {
+        int option;
+        do {
+            System.out.println("-----------------------Gestión de POI-------------------------------");
+            System.out.println("Seleccione una opción:");
+            System.out.println("1. Alta de POI");
+            System.out.println("2. Baja de POI");
+            System.out.println("3. Modificar POI");
+            System.out.println("0. Volver al menú principal");
+
+            option = scanner.nextInt();
+            scanner.nextLine();
+            switch (option) {
+                case 1:
+                    System.out.println("Ingrese el nombre del POI:");
+                    String nombre = scanner.nextLine();
+                    POI poi = new POI(nombre);
+                    poiService.guardarPOI(poi);
+                    break;
+                case 2:
+                    //Logicas de eliminacion de poi
+                    break;
+                case 3:
+                    //Logica de modificacion de huesped
+                case 0:
+                    System.out.println("Volviendo al menú de Principal...");
                     break;
                 default:
                     System.out.println("Opción no válida. Intente nuevamente.");
