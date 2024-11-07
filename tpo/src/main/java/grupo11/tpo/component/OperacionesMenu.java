@@ -127,7 +127,7 @@ public class OperacionesMenu {
                     Reserva reserva = new Reserva(fecha_ini,fecha_fin,id_hab);
                     huespedService.agregarReservaAlHuesped(id_hue,reserva);
                 case 0:
-                    System.out.println("Volviendo al menú de huespedes...");
+                    System.out.println("Volviendo al menú de Principal...");
                     break;
                 default:
                     System.out.println("Opción no válida. Intente nuevamente.");
@@ -155,27 +155,12 @@ public class OperacionesMenu {
                     poiService.guardarPOI(poi);
                     break;
                 case 2:
-                    System.out.println("Ingrese el Id del huésped:");
-                    String id = scanner.nextLine();
-                    huespedService.eliminarHuesped(id);
+                    //Logicas de eliminacion de poi
                     break;
                 case 3:
                     //Logica de modificacion de huesped
-                case 4:
-                    System.out.println("Ingrese Id del huesped");
-                    String id_hue = scanner.nextLine();
-                    System.out.println("Ingrese fecha inicio (formato: yyyy-MM-dd):");
-                    String inicio = scanner.nextLine();
-                    LocalDate fecha_ini = LocalDate.parse(inicio, DateTimeFormatter.ISO_LOCAL_DATE);
-                    System.out.println("Ingrese fecha fin (formato: yyyy-MM-dd):");
-                    String fin = scanner.nextLine();
-                    LocalDate fecha_fin = LocalDate.parse(fin, DateTimeFormatter.ISO_LOCAL_DATE);
-                    System.out.println("Ingrese Id de habitacion");
-                    Long id_hab = scanner.nextLong();
-                    Reserva reserva = new Reserva(fecha_ini,fecha_fin,id_hab);
-                    huespedService.agregarReservaAlHuesped(id_hue,reserva);
                 case 0:
-                    System.out.println("Volviendo al menú de huespedes...");
+                    System.out.println("Volviendo al menú de Principal...");
                     break;
                 default:
                     System.out.println("Opción no válida. Intente nuevamente.");
