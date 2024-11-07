@@ -42,23 +42,11 @@ public class HotelService {
             return "No existe hotel con esa id";
     }
 
-    public void agregarPOI(Long id_hotel,Long id_poi, double distancia) {
-        Optional<Hotel>aux=hotelRepo.findById(id_hotel);
-        Optional<POI>aux2=poiRepository.findById(id_poi);
-        if (aux.isPresent() && aux2.isPresent()){
-            Hotel hotel=aux.get();
-            POI poi=aux2.get();
-            hotel.agregarPoi(poi,distancia);
-            System.out.println("Se agrego POI correctamente");
-        }
-        else{
-            if (!aux.isPresent()){
-                System.out.println("No existe Hotel con dicho ID");
-            }
-            else {
-                System.out.println("No existe POI con dicho ID");
-            }
-        }
+    public void agregarPOIalHotel(POI poi, String nombre,Double distancia){
+        Hotel hotel=hotelRepo.findByName(nombre);
+        SeEncuentraA relacion = new SeEncuentraA(poi,distancia);
+        hotel.agregarPOI(relacion);
+        hotelRepo.save(hotel);
 
     }
 

@@ -27,8 +27,8 @@ public class Hotel {
     private String mail;
     private String location;
 
-    @Relationship(type = "SE_ENCUENTRA_A")
-    private List<SeEncuentraA> poiCercanos= new ArrayList<SeEncuentraA>();
+    @Relationship(type = "SE_ENCUENTRA_A",direction = Relationship.Direction.OUTGOING)
+    private List<SeEncuentraA> poiCercanos = new ArrayList<SeEncuentraA>();
 
     public Hotel(String nombre, String direccion, String telefono, String correo, String ubicacion) {
         this.name = nombre;
@@ -38,8 +38,8 @@ public class Hotel {
         this.location = ubicacion;
     }
 
-    public void agregarPoi(POI poi, Double distancia) {
-        this.poiCercanos.add(new SeEncuentraA(poi, distancia));
+    public void agregarPOI(SeEncuentraA poi){
+        this.poiCercanos.add(poi);
     }
 
 }

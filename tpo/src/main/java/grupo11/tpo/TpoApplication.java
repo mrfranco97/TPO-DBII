@@ -35,11 +35,12 @@ public class TpoApplication implements CommandLineRunner {
 		int option;
 
 		do {
-			System.out.println("Bienvenido al Sistema de Gestión Hotelera");
+			System.out.println("-----------------Bienvenido al Sistema de Gestión Hotelera-------------------------");
 			System.out.println("Seleccione una opción:");
 			System.out.println("1. Gestión de Hoteles");
 			System.out.println("2. Gestión de Huéspedes");
-			System.out.println("3. Búsqueda y Consulta");
+			System.out.println("3. Gestion de POIs");
+			System.out.println("4. Búsqueda y Consulta");
 			System.out.println("0. Salir");
 
 			option = scanner.nextInt();
@@ -52,6 +53,9 @@ public class TpoApplication implements CommandLineRunner {
 					operacionesMenu.gestionarHuespedes(scanner);
 					break;
 				case 3:
+					operacionesMenu.gestionarPOI(scanner);
+					break;
+				case 4:
 					operacionesMenu.busquedaConsulta(scanner);
 					break;
 				case 0:

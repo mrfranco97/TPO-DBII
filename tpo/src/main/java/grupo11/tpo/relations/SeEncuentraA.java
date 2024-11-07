@@ -1,13 +1,17 @@
 package grupo11.tpo.relations;
 
 import grupo11.tpo.entity.POI;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.RelationshipProperties;
 import org.springframework.data.neo4j.core.schema.TargetNode;
 
 @RelationshipProperties
+@Data
 public class SeEncuentraA {
-    @Id
+    @Id@GeneratedValue
     private Long id;
 
     private Double valor;
@@ -15,8 +19,9 @@ public class SeEncuentraA {
     @TargetNode
     private POI poi;
 
-    public SeEncuentraA(POI poi, Double valor) {
-        this.poi = poi;
-        this.valor = valor;
+    public SeEncuentraA(POI poi,Double distancia){
+        this.valor=distancia;
+        this.poi=poi;
+
     }
 }
