@@ -147,7 +147,7 @@ public class OperacionesMenu {
             System.out.println("3. Eliminar Amenity");
             System.out.println("0. Volver al menú principal");
             opcion = scanner.nextInt();
-            scanner.nextLine(); // Consumir nueva línea
+            scanner.nextLine();
 
             switch (opcion) {
                 case 1:
@@ -195,7 +195,7 @@ public class OperacionesMenu {
     public void gestionarHabitaciones(Scanner scanner) {
         int opcion;
         do {
-            System.out.println("Gestión de Habitaciones:");
+            System.out.println("--------------------Gestión de Habitaciones:-------------------------------");
             System.out.println("1. Agregar Habitación");
             System.out.println("2. Modificar Habitación");
             System.out.println("3. Eliminar Habitación");
@@ -207,13 +207,7 @@ public class OperacionesMenu {
                 case 1:
                     System.out.print("Ingrese el tipo de habitación: ");
                     String tipo = scanner.nextLine();
-                    System.out.print("Ingrese la capacidad de la habitación: ");
-                    int capacidad = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("¿Está disponible? (true/false): ");
-                    boolean disponible = scanner.nextBoolean();
-                    scanner.nextLine();
-                    Habitacion nuevaHabitacion = new Habitacion(tipo, capacidad, disponible);
+                    Habitacion nuevaHabitacion = new Habitacion(tipo);
                     habitacionService.guardarHabitacion(nuevaHabitacion);
                     break;
 

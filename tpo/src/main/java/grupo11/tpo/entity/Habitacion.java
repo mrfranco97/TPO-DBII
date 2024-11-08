@@ -16,12 +16,10 @@ public class Habitacion {
     @Id
     private Long id;
     private String tipo;
-    private int capacidad;
-    private boolean disponible;
 
-    public Habitacion(String tipo, int capacidad, boolean disponible) {
+
+    public Habitacion(String tipo) {
         this.tipo = tipo;
-        this.capacidad = capacidad;
-        this.disponible = disponible;
+
     }
 }

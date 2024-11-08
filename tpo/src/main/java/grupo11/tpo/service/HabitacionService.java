@@ -25,8 +25,6 @@ public class HabitacionService {
         Optional<Habitacion> optionalHabitacion = habitacionRepo.findById(id);
         optionalHabitacion.ifPresent(habitacion -> {
             habitacion.setTipo(tipo);
-            habitacion.setCapacidad(capacidad);
-            habitacion.setDisponible(disponible);
             habitacionRepo.save(habitacion);
         });
         return optionalHabitacion;
