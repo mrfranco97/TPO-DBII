@@ -11,4 +11,7 @@ public interface HotelRepository extends Neo4jRepository<Hotel, Long> {
     @Query("MATCH (h:Hotel {name: $name}) RETURN h")
     Hotel findByName(String name);
 
+    @P// Solo carga las relaciones directas
+    List<Hotel> findAll();
+
 }

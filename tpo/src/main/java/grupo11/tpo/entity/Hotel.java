@@ -10,7 +10,9 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -30,6 +32,9 @@ public class Hotel {
     @Relationship(type = "SE_ENCUENTRA_A",direction = Relationship.Direction.OUTGOING)
     private List<SeEncuentraA> poiCercanos = new ArrayList<SeEncuentraA>();
 
+    @Relationship(type = "POSEE",direction = Relationship.Direction.OUTGOING)
+    private Set<Habitacion> habitaciones = new HashSet<>();
+
     public Hotel(String nombre, String direccion, String telefono, String correo, String ubicacion) {
         this.name = nombre;
         this.address = direccion;
@@ -40,6 +45,10 @@ public class Hotel {
 
     public void agregarPOI(SeEncuentraA poi){
         this.poiCercanos.add(poi);
+    }
+
+    public void agregarHabitacion(Habitacion habitacion){
+        this.habitaciones.add(habitacion);
     }
 
 }

@@ -17,12 +17,8 @@ import java.util.Optional;
 import java.util.Scanner;
 
 
-import java.util.Date;
-import java.util.Scanner;
-import java.util.Set;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 @Component
 public class OperacionesMenu {
@@ -96,15 +92,13 @@ public class OperacionesMenu {
         } while (option != 0);
     }
 
-    public void gestionarHuespedes(Scanner scanner) {
+    public void gestionarHuespedesReservas(Scanner scanner) {
         int option;
         do {
-            System.out.println("--------------------Gestión de Huespedes--------------------------------");
+            System.out.println("--------------------Gestión de Huespedes y Reservas--------------------------------");
             System.out.println("Seleccione una opción:");
             System.out.println("1. Alta de Huesped");
-            System.out.println("2. Baja de Huesped");
-            System.out.println("3. Modificar Huesped");
-            System.out.println("4. Generar Reserva");
+            System.out.println("2. Generar Reserva");
             System.out.println("0. Volver al menú principal");
 
             option = scanner.nextInt();
@@ -123,13 +117,6 @@ public class OperacionesMenu {
                     huespedService.guardarHuesped(huesped);
                     break;
                 case 2:
-                    System.out.println("Ingrese el Id del huésped:");
-                    String id = scanner.nextLine();
-                    huespedService.eliminarHuesped(id);
-                    break;
-                case 3:
-                    //Logica de modificacion de huesped
-                case 4:
                     System.out.println("Ingrese Id del huesped");
                     String id_hue = scanner.nextLine();
                     System.out.println("Ingrese fecha inicio (formato: yyyy-MM-dd):");
@@ -188,11 +175,10 @@ public class OperacionesMenu {
         // Implementar lógica para búsqueda y consulta
     }
 
-    ////////////////////////////////7
     public void gestionarAmenities(Scanner scanner) {
         int opcion;
         do {
-            System.out.println("Gestión de Amenities:");
+            System.out.println("-------------------Gestión de Amenities:----------------------------");
             System.out.println("1. Agregar Amenity");
             System.out.println("2. Modificar Amenity");
             System.out.println("3. Eliminar Amenity");
@@ -250,16 +236,26 @@ public class OperacionesMenu {
             System.out.println("1. Agregar Habitación");
             System.out.println("2. Modificar Habitación");
             System.out.println("3. Eliminar Habitación");
+            System.out.println("4. Agregar Amenity");
             System.out.println("0. Volver al menú principal");
             opcion = scanner.nextInt();
-            scanner.nextLine(); // Consumir nueva línea
+            scanner.nextLine();
 
             switch (opcion) {
                 case 1:
+                    System.out.print("Seleccion el hotel al que le dara de alta la habitacion.... ");
+                    hotelService.obtenerHoteles();
+                    for(Hotel hotel : hotelService.obtenerHoteles()){
+                        System.out.print(hotel.getId()+hotel.getName());
+                    }
+                    Long seleccion = scanner.nextLong();
+                    scanner.nextLine();
+                    Hotel hotel_seleccionado=hotelService.buscarHotelPorId(seleccion);
                     System.out.print("Ingrese el tipo de habitación: ");
                     String tipo = scanner.nextLine();
                     Habitacion nuevaHabitacion = new Habitacion(tipo);
                     habitacionService.guardarHabitacion(nuevaHabitacion);
+                    hotelService.agregarHabitacionalHotel(hotel_seleccionado,nuevaHabitacion);
                     break;
 
                 case 2:
@@ -268,12 +264,7 @@ public class OperacionesMenu {
                     scanner.nextLine();
                     System.out.print("Ingrese el nuevo tipo: ");
                     String nuevoTipo = scanner.nextLine();
-                    System.out.print("Ingrese la nueva capacidad: ");
-                    int nuevaCapacidad = scanner.nextInt();
-                    System.out.print("¿Está disponible? (true/false): ");
-                    boolean nuevaDisponibilidad = scanner.nextBoolean();
-                    scanner.nextLine();
-                    Optional<Habitacion> habitacionMod = habitacionService.modificarHabitacion(idModHabitacion, nuevoTipo, nuevaCapacidad, nuevaDisponibilidad);
+                    Optional<Habitacion> habitacionMod = habitacionService.modificarHabitacion(idModHabitacion, nuevoTipo);
                     if (((java.util.Optional<?>) habitacionMod).isPresent()) {
                         System.out.println("Habitación modificada correctamente.");
                     } else {
@@ -286,6 +277,9 @@ public class OperacionesMenu {
                     Long idEliminar = scanner.nextLong();
                     habitacionService.eliminarHabitacion(idEliminar);
                     System.out.println("Habitación eliminada correctamente.");
+                    break;
+                case 4:
+                    //Logica Amenities
                     break;
 
                 case 0:

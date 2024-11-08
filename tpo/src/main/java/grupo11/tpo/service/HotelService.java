@@ -1,21 +1,21 @@
 package grupo11.tpo.service;
 
+import grupo11.tpo.entity.Habitacion;
 import grupo11.tpo.entity.Hotel;
 import grupo11.tpo.entity.POI;
 import grupo11.tpo.relations.SeEncuentraA;
 import grupo11.tpo.repository.HotelRepository;
-import grupo11.tpo.repository.POIRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class HotelService {
     @Autowired
     private HotelRepository hotelRepo;
-    @Autowired
-    private POIRepository poiRepository;
+
 
     public void guardarHotel(Hotel hotel) {
         hotelRepo.save(hotel);
@@ -47,7 +47,25 @@ public class HotelService {
         SeEncuentraA relacion = new SeEncuentraA(poi,distancia);
         hotel.agregarPOI(relacion);
         hotelRepo.save(hotel);
+    }
 
+    public void agregarHabitacionalHotel(Hotel hotel,Habitacion habitacion){
+        hotel.agregarHabitacion(habitacion);
+        hotelRepo.save(hotel);
+    }
+    public List<Hotel> obtenerHoteles(){
+        return hotelRepo.findAll();
+    }
+
+    public Hotel buscarHotelPorId(Long id){
+        Optional<Hotel> aux=hotelRepo.findById(id);
+        if (aux.isPresent()){
+            return aux.get();
+        }
+        else
+        {
+            return null;
+        }
     }
 
 }

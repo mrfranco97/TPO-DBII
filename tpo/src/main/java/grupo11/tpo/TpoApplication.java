@@ -1,22 +1,12 @@
 package grupo11.tpo;
 
 import grupo11.tpo.component.OperacionesMenu;
-import grupo11.tpo.entity.Hotel;
-import grupo11.tpo.entity.Huesped;
-import grupo11.tpo.entity.Reserva;
-import grupo11.tpo.repository.HotelRepository;
-import grupo11.tpo.service.HotelService;
-import grupo11.tpo.service.HuespedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -38,9 +28,11 @@ public class TpoApplication implements CommandLineRunner {
 			System.out.println("-----------------Bienvenido al Sistema de Gestión Hotelera-------------------------");
 			System.out.println("Seleccione una opción:");
 			System.out.println("1. Gestión de Hoteles");
-			System.out.println("2. Gestión de Huéspedes");
-			System.out.println("3. Gestion de POIs");
-			System.out.println("4. Búsqueda y Consulta");
+			System.out.println("2. Gestion de Habitaciones");
+			System.out.println("3. Gestion de Amenities");
+			System.out.println("4. Gestion de POIs");
+			System.out.println("5. Alta de huesped y Reserva");
+			System.out.println("6. Búsqueda y Consulta");
 			System.out.println("0. Salir");
 
 			option = scanner.nextInt();
@@ -50,13 +42,16 @@ public class TpoApplication implements CommandLineRunner {
 					operacionesMenu.gestionarHoteles(scanner);
 					break;
 				case 2:
-					operacionesMenu.gestionarHuespedes(scanner);
+					operacionesMenu.gestionarHabitaciones(scanner);
 					break;
 				case 3:
-					operacionesMenu.gestionarPOI(scanner);
+					operacionesMenu.gestionarAmenities(scanner);
 					break;
 				case 4:
-					operacionesMenu.busquedaConsulta(scanner);
+					operacionesMenu.gestionarPOI(scanner);
+					break;
+				case 5:
+					operacionesMenu.gestionarHuespedesReservas(scanner);
 					break;
 				case 0:
 					System.out.println("Saliendo del sistema...");

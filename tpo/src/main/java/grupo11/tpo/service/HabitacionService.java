@@ -21,7 +21,8 @@ public class HabitacionService {
         habitacionRepo.deleteById(id);
     }
 
-    public Optional<Habitacion> modificarHabitacion(Long id, String tipo, int capacidad, boolean disponible) {
+
+    public Optional<Habitacion> modificarHabitacion(Long id, String tipo) {
         Optional<Habitacion> optionalHabitacion = habitacionRepo.findById(id);
         optionalHabitacion.ifPresent(habitacion -> {
             habitacion.setTipo(tipo);
