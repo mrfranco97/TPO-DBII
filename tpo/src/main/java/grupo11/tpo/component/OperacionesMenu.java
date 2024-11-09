@@ -71,17 +71,24 @@ public class OperacionesMenu {
                     // Lógica para modificación de hotel
                     break;
                 case 4:
-                    System.out.println("Ingrese el nombre del Hotel:");
-                    String nombre_hotel = scanner.nextLine();
+                    System.out.println("Seleccione el hotel....");
+                    for(Hotel hotel_p: hotelService.obtenerHoteles()){
+                        System.out.println(hotel_p.getId()+". "+hotel_p.getName());
+                    }
+                    Long id_hotel = scanner.nextLong();
                     scanner.nextLine();
-                    System.out.println("Ingrese el id del POI:");
+                    System.out.println("Seleccione el POI....");
+                    for(POI poi:poiService.obtenerPOIs()){
+                        System.out.println(poi.getId()+". "+poi.getName());
+                    }
                     Long poi_cod = scanner.nextLong();
                     scanner.nextLine();
-                    System.out.println("Ingrese la distancia con el POI:");
+                    System.out.println("Ingrese la distancia entre ellos: ");
                     Double distancia = scanner.nextDouble();
                     scanner.nextLine();
                     POI poi=poiService.buscarPOI(poi_cod);
-                    hotelService.agregarPOIalHotel(poi,nombre_hotel,distancia);
+                    Hotel hotel_poi=hotelService.buscarHotelPorId(id_hotel);
+                    hotelService.agregarPOIalHotel(poi,hotel_poi,distancia);
                     break;
                 case 0:
                     System.out.println("Volviendo al menú principal...");
@@ -244,7 +251,6 @@ public class OperacionesMenu {
             switch (opcion) {
                 case 1:
                     System.out.print("Seleccion el hotel al que le dara de alta la habitacion.... ");
-                    hotelService.obtenerHoteles();
                     for(Hotel hotel : hotelService.obtenerHoteles()){
                         System.out.print(hotel.getId()+hotel.getName());
                     }

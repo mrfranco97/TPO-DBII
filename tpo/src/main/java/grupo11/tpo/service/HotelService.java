@@ -42,11 +42,10 @@ public class HotelService {
             return "No existe hotel con esa id";
     }
 
-    public void agregarPOIalHotel(POI poi, String nombre,Double distancia){
-        Hotel hotel=hotelRepo.findByName(nombre);
-        SeEncuentraA relacion = new SeEncuentraA(poi,distancia);
-        hotel.agregarPOI(relacion);
+    public void agregarPOIalHotel(POI poi, Hotel hotel,Double distancia){
+        hotel.agregarPOI(new SeEncuentraA(poi,distancia));
         hotelRepo.save(hotel);
+        System.out.println("Se guardo correctamente.");
     }
 
     public void agregarHabitacionalHotel(Hotel hotel,Habitacion habitacion){
