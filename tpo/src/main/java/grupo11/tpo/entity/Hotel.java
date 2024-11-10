@@ -4,13 +4,16 @@ import grupo11.tpo.relations.SeEncuentraA;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -26,9 +29,12 @@ public class Hotel {
     private String phone;
     private String mail;
     private String location;
-
+    
     @Relationship(type = "SE_ENCUENTRA_A",direction = Relationship.Direction.OUTGOING)
     private List<SeEncuentraA> poiCercanos = new ArrayList<SeEncuentraA>();
+
+    @Relationship(type = "POSEE",direction = Relationship.Direction.OUTGOING)
+    private Set<Habitacion> habitaciones = new HashSet<>();
 
     public Hotel(String nombre, String direccion, String telefono, String correo, String ubicacion) {
         this.name = nombre;
@@ -40,6 +46,10 @@ public class Hotel {
 
     public void agregarPOI(SeEncuentraA poi){
         this.poiCercanos.add(poi);
+    }
+
+    public void agregarHabitacion(Habitacion habitacion){
+        this.habitaciones.add(habitacion);
     }
 
 }
