@@ -23,13 +23,9 @@ public class HabitacionService {
     }
 
 
-    public Optional<Habitacion> modificarHabitacion(Long id, String tipo) {
-        Optional<Habitacion> optionalHabitacion = habitacionRepo.findById(id);
-        optionalHabitacion.ifPresent(habitacion -> {
-            habitacion.setTipo(tipo);
-            habitacionRepo.save(habitacion);
-        });
-        return optionalHabitacion;
+    public void modificarHabitacion(Habitacion habitacion, String tipo) {
+        habitacion.setTipo(tipo);
+        habitacionRepo.save(habitacion);
     }
 
     public void agregarAmenity(Habitacion habitacion, Amenity amenity){
