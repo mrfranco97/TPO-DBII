@@ -28,6 +28,12 @@ public class POIService {
         return null;
     }
 
+    public void modificarPoi(POI poi,String nombre){
+        poi.setName(nombre);
+        poiRepository.save(poi);
+        System.out.println("Se guardo correctamente");
+    }
+
     public List<POI>obtenerPOIs(){
         return poiRepository.findAll();
     }

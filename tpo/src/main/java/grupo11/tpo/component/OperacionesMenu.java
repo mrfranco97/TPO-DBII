@@ -13,6 +13,8 @@ import grupo11.tpo.entity.Amenity;
 import grupo11.tpo.entity.Habitacion;
 import grupo11.tpo.service.AmenityService;
 import grupo11.tpo.service.HabitacionService;
+import org.yaml.snakeyaml.events.StreamEndEvent;
+
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -58,7 +60,7 @@ public class OperacionesMenu {
                     String telefono = scanner.nextLine();
                     System.out.println("Ingrese el correo del hotel:");
                     String correo = scanner.nextLine();
-                    System.out.println("Ingrese el correo la zona del ubicacion:");
+                    System.out.println("Ingrese  ubicacion:");
                     String ubicacion = scanner.nextLine();
                     Hotel hotel = new Hotel(nombre,direccion,telefono,correo,ubicacion);
                     hotelService.guardarHotel(hotel);
@@ -69,7 +71,25 @@ public class OperacionesMenu {
                     hotelService.eliminarHotel(nombre_h);
                     break;
                 case 3:
-                    // Lógica para modificación de hotel
+                    System.out.println("Seleccion un Hotel: ");
+                    for(Hotel hotel_i : hotelService.obtenerHoteles()){
+                        System.out.println(hotel_i.getId()+". "+hotel_i.getName());
+                        System.out.println();
+                    }
+                    Long hotel_mod_cod = scanner.nextLong();
+                    scanner.nextLine();
+                    Hotel hotel_m = hotelService.buscarHotelPorId(hotel_mod_cod);
+                    System.out.println("Ingrese el nombre del hotel:");
+                    String nombre_m = scanner.nextLine();
+                    System.out.println("Ingrese la dirección del hotel:");
+                    String direccion_m = scanner.nextLine();
+                    System.out.println("Ingrese el teléfono del hotel:");
+                    String telefono_m = scanner.nextLine();
+                    System.out.println("Ingrese el correo del hotel:");
+                    String correo_m = scanner.nextLine();
+                    System.out.println("Ingrese  ubicacion:");
+                    String ubicacion_m = scanner.nextLine();
+                    hotelService.modificarHotel(hotel_m,nombre_m,direccion_m,correo_m,telefono_m,ubicacion_m);
                     break;
                 case 4:
                     System.out.println("Seleccione el hotel....");
@@ -173,7 +193,17 @@ public class OperacionesMenu {
                     //Logicas de eliminacion de poi
                     break;
                 case 3:
-                    //Logica de modificacion de huesped
+                    System.out.println("Selecione un POI: ");
+                    for(POI pois : poiService.obtenerPOIs()){
+                        System.out.println(pois.getId()+". "+pois.getName());
+                        System.out.println();
+                    }
+                    Long poi_cod_m = scanner.nextLong();
+                    scanner.nextLine();
+                    POI poi_m=poiService.buscarPOI(poi_cod_m);
+                    System.out.println("Ingrese el nuevo nombre: ");
+                    String nombre_m = scanner.nextLine();
+                    poiService.modificarPoi(poi_m,nombre_m);
                 case 0:
                     System.out.println("Volviendo al menú de Principal...");
                     break;
@@ -209,19 +239,19 @@ public class OperacionesMenu {
                     break;
 
                 case 2:
-                    System.out.print("Ingrese el ID del amenity a modificar: ");
+                    System.out.print("Selecciones un amenity: ");
+                    for(Amenity amenities : amenityService.obtenerAmenities()){
+                        System.out.println(amenities.getId()+". "+amenities.getName());
+                        System.out.println();
+                    }
                     Long idModAmenity = scanner.nextLong();
                     scanner.nextLine();
+                    Amenity amenity_m = amenityService.obtenerAmenitiesporId(idModAmenity);
                     System.out.print("Ingrese el nuevo nombre: ");
                     String nuevoNombre = scanner.nextLine();
                     System.out.print("Ingrese la nueva descripción: ");
                     String nuevaDescripcion = scanner.nextLine();
-                    Optional<Amenity> amenityMod = amenityService.modificarAmenity(idModAmenity, nuevoNombre, nuevaDescripcion);
-                    if (amenityMod.isPresent()) {
-                        System.out.println("Amenity modificado correctamente.");
-                    } else {
-                        System.out.println("Amenity no encontrado.");
-                    }
+                    amenityService.modificarAmenity(amenity_m,nuevoNombre,nuevaDescripcion);
                     break;
 
                 case 3:
@@ -257,7 +287,8 @@ public class OperacionesMenu {
                 case 1:
                     System.out.print("Seleccion el hotel al que le dara de alta la habitacion.... ");
                     for(Hotel hotel : hotelService.obtenerHoteles()){
-                        System.out.print(hotel.getId()+hotel.getName());
+                        System.out.print(hotel.getId()+". "+hotel.getName());
+                        System.out.println();
                     }
                     Long seleccion = scanner.nextLong();
                     scanner.nextLine();
@@ -270,17 +301,26 @@ public class OperacionesMenu {
                     break;
 
                 case 2:
-                    System.out.print("Ingrese el ID de la habitación a modificar: ");
-                    Long idModHabitacion = scanner.nextLong();
-                    scanner.nextLine();
-                    System.out.print("Ingrese el nuevo tipo: ");
-                    String nuevoTipo = scanner.nextLine();
-                    Optional<Habitacion> habitacionMod = habitacionService.modificarHabitacion(idModHabitacion, nuevoTipo);
-                    if (((java.util.Optional<?>) habitacionMod).isPresent()) {
-                        System.out.println("Habitación modificada correctamente.");
-                    } else {
-                        System.out.println("Habitación no encontrada.");
+                    System.out.print("Seleccion el hotel al que pertenece la habitacion.... ");
+                    for(Hotel hotel : hotelService.obtenerHoteles()){
+                        System.out.print(hotel.getId()+". "+hotel.getName());
+                        System.out.println();
                     }
+                    Long seleccion_hotel = scanner.nextLong();
+                    scanner.nextLine();
+                    Hotel hotel = hotelService.buscarHotelPorId(seleccion_hotel);
+                    System.out.print("Seleccione la habitacion.... ");
+                    System.out.println();
+                    for(Habitacion habitacion : hotel.getHabitaciones()){
+                        System.out.print(habitacion.getId()+". "+habitacion.getTipo());
+                        System.out.println();
+                    }
+                    Long seleccion_habitacion = scanner.nextLong();
+                    scanner.nextLine();
+                    Habitacion habitacion_m = habitacionService.obtenerHabitacionporId(seleccion_habitacion);
+                    System.out.print("Ingrese nuevo Tipo: ");
+                    String nuevoTipo= scanner.nextLine();
+                    habitacionService.modificarHabitacion(habitacion_m,nuevoTipo);
                     break;
 
                 case 3:

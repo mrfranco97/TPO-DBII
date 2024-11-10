@@ -23,14 +23,11 @@ public class AmenityService {
         amenityRepo.deleteByName(name);
     }
 
-    public Optional<Amenity> modificarAmenity(Long id, String name, String description) {
-        Optional<Amenity> optionalAmenity = amenityRepo.findById(id);
-        optionalAmenity.ifPresent(amenity -> {
-            amenity.setName(name);
-            amenity.setDescription(description);
-            amenityRepo.save(amenity);
-        });
-        return optionalAmenity;
+    public void modificarAmenity(Amenity amenity, String nombre, String descripcion) {
+        amenity.setName(nombre);
+        amenity.setDescription(descripcion);
+        amenityRepo.save(amenity);
+        System.out.println("Se guardo correctamente");
     }
 
     public List<Amenity> obtenerAmenities(){return amenityRepo.findAll();}
