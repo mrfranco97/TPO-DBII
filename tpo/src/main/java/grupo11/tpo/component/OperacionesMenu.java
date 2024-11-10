@@ -353,6 +353,27 @@ public class OperacionesMenu {
                     System.out.println("--------------------------------------------------- ");
                     break;
                 case 2:
+                    System.out.println("Seleccione el hotel...");
+                    for(Hotel hoteles: hotelService.obtenerHoteles())
+                    {
+                        System.out.print(hoteles.getId()+". "+hoteles.getName());
+                        System.out.println();
+                    }
+                    Long hotel_sel=scanner.nextLong();
+                    Hotel hotel_selec=hotelService.buscarHotelPorId(hotel_sel);
+                    for(Habitacion habitaciones:hotel_selec.getHabitaciones()){
+                        System.out.print(habitaciones.getId()+". "+habitaciones.getTipo());
+                        System.out.println();
+                    }
+                    Long habitacion_sel=scanner.nextLong();
+                    scanner.nextLine();
+                    Habitacion habitacion_selec=habitacionService.obtenerHabitacionporId(habitacion_sel);
+                    System.out.println("-------------------------Amenities--------------------------");
+                    for(Amenity amenties : habitacion_selec.getAmenities()){
+                        System.out.println("-"+amenties.getName());
+                        System.out.println();
+                    }
+                    System.out.println("------------------------------------------------------------");
                     break;
 
                 case 0:
