@@ -4,6 +4,7 @@ import grupo11.tpo.relations.SeEncuentraA;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
@@ -28,7 +29,7 @@ public class Hotel {
     private String phone;
     private String mail;
     private String location;
-
+    
     @Relationship(type = "SE_ENCUENTRA_A",direction = Relationship.Direction.OUTGOING)
     private List<SeEncuentraA> poiCercanos = new ArrayList<SeEncuentraA>();
 
