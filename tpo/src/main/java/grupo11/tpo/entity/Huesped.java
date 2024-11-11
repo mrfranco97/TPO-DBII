@@ -20,7 +20,7 @@ public class Huesped {
     private String address;
     private String phone;
     private String mail;
-    private List<Reserva> reservas = new ArrayList<Reserva>();
+    //private List<Reserva> reservas = new ArrayList<Reserva>();
 
     public Huesped(String name, String address, String phone, String mail) {
         this.name = name;
@@ -28,7 +28,7 @@ public class Huesped {
         this.phone = phone;
         this.mail = mail;
     }
-    public void addReserva(Reserva reserva) {
+    /* public void addReserva(Reserva reserva) {
         this.reservas.add(reserva);
-    }
+    } */
 }

@@ -6,6 +6,7 @@ import grupo11.tpo.entity.POI;
 import grupo11.tpo.entity.Reserva;
 import grupo11.tpo.service.HotelService;
 import grupo11.tpo.service.HuespedService;
+import grupo11.tpo.service.ReservaService;
 import grupo11.tpo.service.POIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,14 @@ import org.yaml.snakeyaml.events.StreamEndEvent;
 
 import java.util.Optional;
 import java.util.Scanner;
+import grupo11.tpo.service.ReservaService;
 
 
+
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -34,7 +41,8 @@ public class OperacionesMenu {
     private AmenityService amenityService;
     @Autowired
     private HabitacionService habitacionService;
-
+    @Autowired
+    private ReservaService reservaService;
 
     public void gestionarHoteles(Scanner scanner) {
         int option;
@@ -137,6 +145,7 @@ public class OperacionesMenu {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Alta de Huesped");
             System.out.println("2. Generar Reserva");
+            System.out.println("3. Buscar Habitación Disponible en Fechas");
             System.out.println("0. Volver al menú principal");
 
             option = scanner.nextInt();
@@ -165,8 +174,20 @@ public class OperacionesMenu {
                     LocalDate fecha_fin = LocalDate.parse(fin, DateTimeFormatter.ISO_LOCAL_DATE);
                     System.out.println("Ingrese Id de habitacion");
                     Long id_hab = scanner.nextLong();
-                    Reserva reserva = new Reserva(fecha_ini,fecha_fin,id_hab);
-                    huespedService.agregarReservaAlHuesped(id_hue,reserva);
+                    Reserva reserva = new Reserva(fecha_ini,fecha_fin,id_hab,id_hue);
+                    reservaService.guardarReserva(id_hue,reserva);
+                    break;
+                case 3:
+                    // Buscar habitación disponible en un rango de fechas
+                    System.out.println("Ingrese la fecha de inicio (formato: yyyy-MM-dd):");
+                    String init = scanner.nextLine();
+                    LocalDate fechaInicio = LocalDate.parse(init, DateTimeFormatter.ISO_LOCAL_DATE);
+                    System.out.println("Ingrese la fecha de fin (formato: yyyy-MM-dd):");
+                    String ult = scanner.nextLine();
+                    LocalDate fechaFin = LocalDate.parse(ult, DateTimeFormatter.ISO_LOCAL_DATE);
+                    List<Habitacion> habitacionesDisponibles = habitacionService.buscarHabitacionesDisponibles(fechaInicio, fechaFin);
+                    habitacionesDisponibles.forEach(System.out::println); // Mostrar habitaciones disponibles
+                    break;
                 case 0:
                     System.out.println("Volviendo al menú de Principal...");
                     break;
@@ -228,6 +249,64 @@ public class OperacionesMenu {
 
     public void busquedaConsulta(Scanner scanner) {
         // Implementar lógica para búsqueda y consulta
+        int option;
+        do {
+            System.out.println("Busqueda y Consulta");
+            System.out.println("Seleccione una opción:");
+            System.out.println("1. Ver detalles de Huesped");
+            System.out.println("2. Buscar Reservas por Fecha");
+            System.out.println("3. Buscar Reservas por Numero de Confirmacion (ID)");
+            System.out.println("4. Consultar Reservas por Huesped");
+            System.out.println("5. Consultar Detalles de Hotel"); // Pendiente
+            System.out.println("6. Consultar Amenities de Habitacion"); // Pendiente
+            System.out.println("0. Volver al menú principal");
+
+            option = scanner.nextInt();
+            scanner.nextLine();
+            String correo_hues = ""; // Inicializar la variable
+            switch (option) {
+                case 1:
+                    System.out.println("Ingrese el correo del huesped");
+                    correo_hues = scanner.nextLine();
+                    huespedService.obtenerHuespedPorCorreo(correo_hues);
+                    break;
+                case 2:
+                    // Consulta de reservas por fecha
+                    System.out.println("Ingrese la fecha de consulta (formato: yyyy-MM-dd):");
+                    String fechaConsultaStr = scanner.nextLine();
+                    LocalDate fechaConsulta = LocalDate.parse(fechaConsultaStr, DateTimeFormatter.ISO_LOCAL_DATE);
+                    List<Reserva> reservas = reservaService.buscarReservaPorFecha(fechaConsulta);
+                    if (reservas.isEmpty()) {
+                        System.out.println("No se encontraron reservas para esta fecha.");
+                    } else {
+                        reservas.forEach(System.out::println); // Mostrar reservas
+                    }
+                    break;
+                case 3:
+                    System.out.println("Ingrese el ID de la Reserva");
+                    String id_reserva = scanner.nextLine();
+                    reservaService.obtenerReservaPorID(id_reserva);
+                    break;
+                case 4:
+                    // Consultar reservas de un huésped por ID o correo
+                    System.out.println("Ingrese el ID o correo del huésped:");
+                    String idHuesped = scanner.nextLine();
+                    List<Reserva> reservasHuesped = reservaService.buscarReservasPorHuesped(idHuesped);
+                    reservasHuesped.forEach(System.out::println); // Mostrar reservas del huésped
+                    break;
+                case 5:
+
+                    break;
+                case 6:
+
+                    break;
+                case 0:
+                    System.out.println("Volviendo al menú de huespedes...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente nuevamente.");
+            }
+        } while (option != 0);
     }
 
     public void gestionarAmenities(Scanner scanner) {
@@ -294,7 +373,6 @@ public class OperacionesMenu {
             System.out.println("1. Agregar Habitación");
             System.out.println("2. Modificar Habitación");
             System.out.println("3. Eliminar Habitación");
-            System.out.println("4. Agregar Amenity");
             System.out.println("0. Volver al menú principal");
             opcion = scanner.nextInt();
             scanner.nextLine();
@@ -357,92 +435,6 @@ public class OperacionesMenu {
                     scanner.nextLine();
                     habitacionService.eliminarHabitacion(seleccion3_h);
                     break;
-                case 4:
-                    System.out.println("Seleccione el hotel...");
-                    for(Hotel hoteles: hotelService.obtenerHoteles())
-                    {
-                        System.out.println(hoteles.getId()+". "+hoteles.getName());
-                    }
-                    Long hotel_sel=scanner.nextLong();
-                    Hotel hotel_selec=hotelService.buscarHotelPorId(hotel_sel);
-                    for(Habitacion habitaciones:hotel_selec.getHabitaciones()){
-                        System.out.println(habitaciones.getId()+". "+habitaciones.getTipo());
-                    }
-                    Long habitacion_sel=scanner.nextLong();
-                    scanner.nextLine();
-                    Habitacion habitacion_selec=habitacionService.obtenerHabitacionporId(habitacion_sel);
-                    for(Amenity amenities:amenityService.obtenerAmenities()){
-                        System.out.println(amenities.getId()+". "+amenities.getName());
-                    }
-                    Long ameniti_sel=scanner.nextLong();
-                    scanner.nextLine();
-                    Amenity amenity_selec=amenityService.obtenerAmenitiesporId(ameniti_sel);
-                    habitacionService.agregarAmenity(habitacion_selec,amenity_selec);
-
-                    break;
-
-                case 0:
-                    System.out.println("Volviendo al menú principal...");
-                    break;
-
-                default:
-                    System.out.println("Opción inválida. Intente de nuevo.");
-            }
-        } while (opcion != 0);
-    }
-
-    public void consultasEspecificas(Scanner scanner) {
-        int opcion;
-        do {
-            System.out.println("--------------------Consultas Especificas:-------------------------------");
-            System.out.println("1. Detalles Hotel");
-            System.out.println("2. Amenities de una habitacion");
-            System.out.println("0. Volver al menú principal");
-            opcion = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (opcion) {
-                case 1:
-                    System.out.print("Seleccion el hotel... ");
-                    for(Hotel hotel : hotelService.obtenerHoteles()){
-                        System.out.print(hotel.getId()+". "+hotel.getName());
-                        System.out.println();
-                    }
-                    Long seleccion = scanner.nextLong();
-                    scanner.nextLine();
-                    Hotel hotel_seleccionado=hotelService.buscarHotelPorId(seleccion);
-                    System.out.println("-----------------------Detalles:---------------- ");
-                    System.out.println("Nombre: "+hotel_seleccionado.getName());
-                    System.out.println("Direccion: "+hotel_seleccionado.getAddress());
-                    System.out.println("Mail: "+hotel_seleccionado.getMail());
-                    System.out.println("Telefono: "+hotel_seleccionado.getPhone());
-                    System.out.println("Ubicacion: "+hotel_seleccionado.getLocation());
-                    System.out.println("--------------------------------------------------- ");
-                    break;
-                case 2:
-                    System.out.println("Seleccione el hotel...");
-                    for(Hotel hoteles: hotelService.obtenerHoteles())
-                    {
-                        System.out.print(hoteles.getId()+". "+hoteles.getName());
-                        System.out.println();
-                    }
-                    Long hotel_sel=scanner.nextLong();
-                    Hotel hotel_selec=hotelService.buscarHotelPorId(hotel_sel);
-                    for(Habitacion habitaciones:hotel_selec.getHabitaciones()){
-                        System.out.print(habitaciones.getId()+". "+habitaciones.getTipo());
-                        System.out.println();
-                    }
-                    Long habitacion_sel=scanner.nextLong();
-                    scanner.nextLine();
-                    Habitacion habitacion_selec=habitacionService.obtenerHabitacionporId(habitacion_sel);
-                    System.out.println("-------------------------Amenities--------------------------");
-                    for(Amenity amenties : habitacion_selec.getAmenities()){
-                        System.out.println("-"+amenties.getName());
-                        System.out.println();
-                    }
-                    System.out.println("------------------------------------------------------------");
-                    break;
-
                 case 0:
                     System.out.println("Volviendo al menú principal...");
                     break;

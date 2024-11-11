@@ -1,12 +1,20 @@
 package grupo11.tpo;
 
 import grupo11.tpo.component.OperacionesMenu;
+import grupo11.tpo.entity.Habitacion;
+import grupo11.tpo.entity.Reserva;
+import grupo11.tpo.service.HabitacionService;
+import grupo11.tpo.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -18,6 +26,12 @@ public class TpoApplication implements CommandLineRunner {
 
 	@Autowired
 	private OperacionesMenu operacionesMenu;
+
+	@Autowired
+	private HabitacionService habitacionService; 
+	
+	@Autowired
+	private ReservaService reservaService;   
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -54,7 +68,7 @@ public class TpoApplication implements CommandLineRunner {
 					operacionesMenu.gestionarHuespedesReservas(scanner);
 					break;
 				case 6:
-					operacionesMenu.consultasEspecificas(scanner);
+					operacionesMenu.busquedaConsulta(scanner);
 					break;
 				case 0:
 					System.out.println("Saliendo del sistema...");
