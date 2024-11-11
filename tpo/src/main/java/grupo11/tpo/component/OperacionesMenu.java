@@ -211,7 +211,14 @@ public class OperacionesMenu {
                     poiService.guardarPOI(poi);
                     break;
                 case 2:
-                    //Logicas de eliminacion de poi
+                    System.out.println("Seleccione el POI que desea eliminar:");
+                    for (POI pois : poiService.obtenerPOIs()) {
+                        System.out.println(pois.getId() + ". " + pois.getName());
+                    }
+                    Long idPoiEliminar = scanner.nextLong();
+                    scanner.nextLine();
+                    poiService.eliminarPuntoDeInteres(idPoiEliminar); // Llamada para eliminar POI
+                    System.out.println("POI eliminado correctamente.");
                     break;
                 case 3:
                     System.out.println("Selecione un POI: ");
