@@ -68,7 +68,7 @@ public class TpoApplication implements CommandLineRunner {
 					operacionesMenu.gestionarHuespedesReservas(scanner);
 					break;
 				case 6:
-					operacionesMenu.consultasEspecificas(scanner);
+					operacionesMenu.busquedaConsulta(scanner);
 					break;
 				case 0:
 					System.out.println("Saliendo del sistema...");
