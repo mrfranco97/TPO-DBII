@@ -268,7 +268,13 @@ public class OperacionesMenu {
                 case 1:
                     System.out.println("Ingrese el correo del huesped");
                     correo_hues = scanner.nextLine();
-                    huespedService.obtenerHuespedPorCorreo(correo_hues);
+                    Huesped huesped_buscado = huespedService.obtenerHuespedPorCorreo(correo_hues);
+                    System.out.println("-----------------------Detalles:---------------- ");
+                    System.out.println("Nombre: "+huesped_buscado.getName());
+                    System.out.println("Correo: "+huesped_buscado.getMail());
+                    System.out.println("Direccion: "+huesped_buscado.getAddress());
+                    System.out.println("Telefono: "+huesped_buscado.getPhone());
+                    System.out.println("--------------------------------------------------- ");
                     break;
                 case 2:
                     // Consulta de reservas por fecha
@@ -285,7 +291,13 @@ public class OperacionesMenu {
                 case 3:
                     System.out.println("Ingrese el ID de la Reserva");
                     String id_reserva = scanner.nextLine();
-                    reservaService.obtenerReservaPorID(id_reserva);
+                    Reserva reserva_buscada = reservaService.obtenerReservaPorID(id_reserva);
+                    System.out.println("-----------------------Detalles:---------------- ");
+                    System.out.println("Huesped ID: "+reserva_buscada.getId_huesped());
+                    System.out.println("Check In: "+reserva_buscada.getFecha_inicio());
+                    System.out.println("Check Out: "+reserva_buscada.getFecha_final());
+                    System.out.println("Habitacion: "+reserva_buscada.getId_habitacion());
+                    System.out.println("--------------------------------------------------- ");
                     break;
                 case 4:
                     // Consultar reservas de un huésped por ID o correo

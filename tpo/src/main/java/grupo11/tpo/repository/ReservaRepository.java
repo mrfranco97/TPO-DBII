@@ -11,7 +11,7 @@ public interface ReservaRepository extends MongoRepository<Reserva, String> {
 
     // Método para obtener una reserva específica por su ID
     @Query("{'_id': ?0}")
-    Reserva findReservaById(String id);
+    Reserva findReservaById(String _id);
 
     // Método para obtener reservas que empiezan en una fecha específica
     @Query("{ 'fecha_inicio': ?0 }")
