@@ -6,6 +6,7 @@ import org.neo4j.cypherdsl.core.Return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,5 +26,15 @@ public class POIService {
             return poi;
         }
         return null;
+    }
+
+    public void modificarPoi(POI poi,String nombre){
+        poi.setName(nombre);
+        poiRepository.save(poi);
+        System.out.println("Se guardo correctamente");
+    }
+
+    public List<POI>obtenerPOIs(){
+        return poiRepository.findAll();
     }
 }

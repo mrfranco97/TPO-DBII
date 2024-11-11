@@ -1,5 +1,6 @@
 package grupo11.tpo.service;
 
+import grupo11.tpo.entity.Amenity;
 import grupo11.tpo.entity.Habitacion;
 import grupo11.tpo.entity.Reserva;
 import grupo11.tpo.repository.HabitacionRepository;
@@ -30,13 +31,26 @@ public class HabitacionService {
         habitacionRepo.deleteById(id);
     }
 
-    public Optional<Habitacion> modificarHabitacion(Long id, String tipo, int capacidad, boolean disponible) {
-        Optional<Habitacion> optionalHabitacion = habitacionRepo.findById(id);
-        optionalHabitacion.ifPresent(habitacion -> {
-            habitacion.setTipo(tipo);
-            habitacionRepo.save(habitacion);
-        });
-        return optionalHabitacion;
+
+    public void modificarHabitacion(Habitacion habitacion, String tipo) {
+        habitacion.setTipo(tipo);
+        habitacionRepo.save(habitacion);
+    }
+
+    public void agregarAmenity(Habitacion habitacion, Amenity amenity){
+        habitacion.agregarAmenity(amenity);
+        habitacionRepo.save(habitacion);
+        System.out.println("Se guardo correctamente");
+    }
+
+    public Habitacion obtenerHabitacionporId(Long id){
+        Optional<Habitacion> aux = habitacionRepo.findById(id);
+        if(aux.isPresent()){
+            return aux.get();
+        }
+        else {
+            return null;
+        }
     }
 
     // Nuevo método para buscar habitaciones disponibles en un rango de fechas
