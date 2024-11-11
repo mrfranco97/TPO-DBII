@@ -17,15 +17,17 @@ public class Reserva {
     @MongoId
     private String id;
 
+    private String id_huesped;
     private LocalDate fecha_inicio;
     private LocalDate fecha_final;
     private Long id_habitacion;
     private boolean confirmacion;
 
-    public Reserva(LocalDate fecha_inicio,LocalDate fecha_final,Long id_habitacion){
+    public Reserva(LocalDate fecha_inicio,LocalDate fecha_final,Long id_habitacion, String id_huesped){
         this.fecha_inicio=fecha_inicio;
         this.fecha_final=fecha_final;
         this.id_habitacion=id_habitacion;
         this.confirmacion=false;
+        this.id_huesped=id_huesped;
     }
 }

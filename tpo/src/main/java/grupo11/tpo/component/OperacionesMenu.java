@@ -37,6 +37,8 @@ public class OperacionesMenu {
     private AmenityService amenityService;
     @Autowired
     private HabitacionService habitacionService;
+    @Autowired
+    private ReservaService reservaService;
 
 
     public void gestionarHoteles(Scanner scanner) {
@@ -141,8 +143,8 @@ public class OperacionesMenu {
                     LocalDate fecha_fin = LocalDate.parse(fin, DateTimeFormatter.ISO_LOCAL_DATE);
                     System.out.println("Ingrese Id de habitacion");
                     Long id_hab = scanner.nextLong();
-                    Reserva reserva = new Reserva(fecha_ini,fecha_fin,id_hab);
-                    huespedService.agregarReservaAlHuesped(id_hue,reserva);
+                    Reserva reserva = new Reserva(fecha_ini,fecha_fin,id_hab,id_hue);
+                    reservaService.guardarReserva(id_hue,reserva);
                 case 0:
                     System.out.println("Volviendo al menú de Principal...");
                     break;
@@ -193,7 +195,7 @@ public class OperacionesMenu {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Ver detalles de Huesped");
             System.out.println("2. Buscar Reservas por Fecha");
-            System.out.println("3. Buscar Reservas por Fecha");
+            System.out.println("3. Buscar Reservas por ID");
             System.out.println("0. Volver al menú principal");
 
             option = scanner.nextInt();
@@ -211,7 +213,7 @@ public class OperacionesMenu {
                 case 3:
                     System.out.println("Ingrese el ID de la Reserva");
                     String id_reserva = scanner.nextLine();
-                    Service.obtenerHuespedPorCorreo(correo_hues);
+                    reservaService.obtenerReservaPorID(id_reserva);
                 case 0:
                     System.out.println("Volviendo al menú de huespedes...");
                     break;
