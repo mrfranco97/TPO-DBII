@@ -31,4 +31,20 @@ public class Huesped {
     /* public void addReserva(Reserva reserva) {
         this.reservas.add(reserva);
     } */
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getMail() {
+        return mail;
+    }
 }

@@ -30,4 +30,24 @@ public class Reserva {
         this.confirmacion=false;
         this.id_huesped=id_huesped;
     }
+
+    public LocalDate getFecha_inicio() {
+        return fecha_inicio;
+    }
+
+    public LocalDate getFecha_final() {
+        return fecha_final;
+    }
+
+    public Long getId_habitacion() {
+        return id_habitacion;
+    }
+
+    public String getId_huesped() {
+        return id_huesped;
+    }
+
+    public String getId() {
+        return id;
+    }
 }
