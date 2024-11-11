@@ -1,12 +1,10 @@
 package grupo11.tpo;
 
 import grupo11.tpo.component.OperacionesMenu;
-import grupo11.tpo.entity.Hotel;
-import grupo11.tpo.entity.Huesped;
+import grupo11.tpo.entity.Habitacion;
 import grupo11.tpo.entity.Reserva;
-import grupo11.tpo.repository.HotelRepository;
-import grupo11.tpo.service.HotelService;
-import grupo11.tpo.service.HuespedService;
+import grupo11.tpo.service.HabitacionService;
+import grupo11.tpo.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +14,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -28,6 +26,12 @@ public class TpoApplication implements CommandLineRunner {
 
 	@Autowired
 	private OperacionesMenu operacionesMenu;
+
+	@Autowired
+	private HabitacionService habitacionService; 
+	
+	@Autowired
+	private ReservaService reservaService;   
 
 	@Override
 	public void run(String... args) throws Exception {

@@ -19,8 +19,10 @@ import java.util.Scanner;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import java.security.Provider.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -106,6 +108,7 @@ public class OperacionesMenu {
             System.out.println("2. Baja de Huesped");
             System.out.println("3. Modificar Huesped");
             System.out.println("4. Generar Reserva");
+            System.out.println("5. Consultar Reservas por Fecha");
             System.out.println("0. Volver al menú principal");
 
             option = scanner.nextInt();
@@ -141,8 +144,16 @@ public class OperacionesMenu {
                     LocalDate fecha_fin = LocalDate.parse(fin, DateTimeFormatter.ISO_LOCAL_DATE);
                     System.out.println("Ingrese Id de habitacion");
                     Long id_hab = scanner.nextLong();
-                    Reserva reserva = new Reserva(fecha_ini,fecha_fin,id_hab);
-                    huespedService.agregarReservaAlHuesped(id_hue,reserva);
+                    Reserva reserva = new Reserva(fecha_inicio, fecha_final, idHabitacion);
+                    huespedService.agregarReservaAlHuesped(idHuesped, reserva);
+                case 5:
+                // Consulta de reservas por fecha
+                System.out.println("Ingrese la fecha de consulta (formato: yyyy-MM-dd):");
+                LocalDate fechaConsulta = LocalDate.parse(scanner.nextLine());
+                List<Reserva> reservas = reservaService.buscarReservaPorFecha(fechaConsulta);
+                reservas.forEach(System.out::println); // Mostrar reservas
+                break;
+                
                 case 0:
                     System.out.println("Volviendo al menú de Principal...");
                     break;
