@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HabitacionRepository extends Neo4jRepository<Habitacion, Long> {
-    @Query("MATCH (h:Habitacion {tipo: $tipo}) RETURN h")
-    Habitacion findByTipo(String tipo);
 }

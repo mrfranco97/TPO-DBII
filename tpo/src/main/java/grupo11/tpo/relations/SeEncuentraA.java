@@ -8,7 +8,7 @@ import org.springframework.data.neo4j.core.schema.*;
 @RelationshipProperties
 @Data
 public class SeEncuentraA {
-    @Id
+    @RelationshipId
     @GeneratedValue
     private Long id;
 
