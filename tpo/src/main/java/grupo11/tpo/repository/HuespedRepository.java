@@ -2,6 +2,7 @@ package grupo11.tpo.repository;
 
 import grupo11.tpo.entity.Huesped;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 public interface HuespedRepository extends MongoRepository<Huesped,String> {
 

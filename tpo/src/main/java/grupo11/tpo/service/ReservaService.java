@@ -6,6 +6,7 @@ import grupo11.tpo.entity.Reserva;
 import grupo11.tpo.repository.HabitacionRepository;
 import grupo11.tpo.repository.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,22 +22,23 @@ public class ReservaService {
     @Autowired
     private ReservaRepository reservaRepo;
 
-    public Huesped obtenerReservaporID(int id) {
+    public Reserva obtenerReservaporID(String id) {
         System.out.println("Obteniendo detalles de Reserva Nº" + id);
         return reservaRepo.findReservaById(id);
     }
 
     public List<Reserva> buscarReservaPorFecha(LocalDate fecha_inicio){
         System.out.println("Buscando reservas por la fecha ingresada: " + fecha_inicio);
-        return findReservesByDate(fecha_inicio);
+        return reservaRepo.findReservesByDate(fecha_inicio);
     }
+
 
     // Método para buscar habitaciones disponibles en un rango de fechas
     public List<Habitacion> buscarHabitacionesDisponibles(LocalDate fechaInicio, LocalDate fechaFin) {
         List<Habitacion> habitacionesDisponibles = habitacionRepository.findAll();  // Trae todas las habitaciones
         for (Habitacion habitacion : habitacionesDisponibles) {
             // Verificar si hay reservas que solapan las fechas
-            List<Reserva> reservas = reservaRepository.findReservasPorRangoDeFechas(habitacion.getId(), fechaInicio, fechaFin);
+            List<Reserva> reservas = reservaRepo.findReservasPorRangoDeFechas(habitacion.getId(), fechaInicio, fechaFin);
             if (!reservas.isEmpty()) {
                 // Si hay reservas que solapan, eliminar la habitación de la lista de disponibles
                 habitacionesDisponibles.remove(habitacion);
@@ -45,9 +47,9 @@ public class ReservaService {
         return habitacionesDisponibles;
     }
 
-    // Método para obtener reservas hechas en una fecha específica
-    public List<Reserva> obtenerReservasPorFecha(LocalDate fecha) {
-        System.out.println("Buscando reservas para la fecha: " + fecha);
-        return reservaRepo.findReservesByDate(fecha);  // Llama al método del repositorio con la fecha
+    public List<Reserva> buscarReservasPorHuesped(String huespedId) {
+        System.out.println("Obteniendo reservas para el huésped con ID: " + huespedId);
+        return reservaRepo.findReservasPorHuespedId(huespedId);
     }
+
 }

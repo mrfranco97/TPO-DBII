@@ -16,13 +16,14 @@ import grupo11.tpo.service.AmenityService;
 import grupo11.tpo.service.HabitacionService;
 import java.util.Optional;
 import java.util.Scanner;
+import grupo11.tpo.service.ReservaService;
+
 
 
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
-import java.security.Provider.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -39,6 +40,9 @@ public class OperacionesMenu {
     private AmenityService amenityService;
     @Autowired
     private HabitacionService habitacionService;
+    @Autowired
+    private ReservaService reservaService;
+
 
 
     public void gestionarHoteles(Scanner scanner) {
@@ -109,6 +113,7 @@ public class OperacionesMenu {
             System.out.println("3. Modificar Huesped");
             System.out.println("4. Generar Reserva");
             System.out.println("5. Consultar Reservas por Fecha");
+            System.out.println("6. Consultar Reservas por Huesped");
             System.out.println("0. Volver al menú principal");
 
             option = scanner.nextInt();
@@ -144,16 +149,28 @@ public class OperacionesMenu {
                     LocalDate fecha_fin = LocalDate.parse(fin, DateTimeFormatter.ISO_LOCAL_DATE);
                     System.out.println("Ingrese Id de habitacion");
                     Long id_hab = scanner.nextLong();
-                    Reserva reserva = new Reserva(fecha_inicio, fecha_final, idHabitacion);
-                    huespedService.agregarReservaAlHuesped(idHuesped, reserva);
+                    Reserva reserva = new Reserva(fecha_ini, fecha_fin, id_hab);
+                    huespedService.agregarReservaAlHuesped(id_hue, reserva);
                 case 5:
                 // Consulta de reservas por fecha
                 System.out.println("Ingrese la fecha de consulta (formato: yyyy-MM-dd):");
-                LocalDate fechaConsulta = LocalDate.parse(scanner.nextLine());
+                String fechaConsultaStr = scanner.nextLine();
+                LocalDate fechaConsulta = LocalDate.parse(fechaConsultaStr, DateTimeFormatter.ISO_LOCAL_DATE);
                 List<Reserva> reservas = reservaService.buscarReservaPorFecha(fechaConsulta);
-                reservas.forEach(System.out::println); // Mostrar reservas
+                if (reservas.isEmpty()) {
+                    System.out.println("No se encontraron reservas para esta fecha.");
+                } else {
+                    reservas.forEach(System.out::println); // Mostrar reservas
+                }
                 break;
-                
+
+                case 6:
+                    // Consultar reservas de un huésped por ID o correo
+                    System.out.println("Ingrese el ID o correo del huésped:");
+                    String idHuesped = scanner.nextLine();
+                    List<Reserva> reservasHuesped = reservaService.buscarReservasPorHuesped(idHuesped);
+                    reservasHuesped.forEach(System.out::println); // Mostrar reservas del huésped
+                    break;
                 case 0:
                     System.out.println("Volviendo al menú de Principal...");
                     break;
@@ -209,20 +226,24 @@ public class OperacionesMenu {
 
             option = scanner.nextInt();
             scanner.nextLine();
+            String correo_hues = ""; // Inicializar la variable
             switch (option) {
                 case 1:
                     System.out.println("Ingrese el correo del huesped");
-                    String correo_hues = scanner.nextLine();
+                    correo_hues = scanner.nextLine();
                     huespedService.obtenerHuespedPorCorreo(correo_hues);
+                    break;
                 case 2:
                     System.out.println("Ingresar la fecha de reserva (formato: yyyy-MM-dd): ");
                     String inicio = scanner.nextLine();
                     LocalDate fecha_ini = LocalDate.parse(inicio, DateTimeFormatter.ISO_LOCAL_DATE);
                     reservaService.buscarReservaPorFecha(fecha_ini);
+                    break;
                 case 3:
                     System.out.println("Ingrese el ID de la Reserva");
                     String id_reserva = scanner.nextLine();
-                    Service.obtenerHuespedPorCorreo(correo_hues);
+                    huespedService.obtenerHuespedPorCorreo(correo_hues);
+                    break;
                 case 0:
                     System.out.println("Volviendo al menú de huespedes...");
                     break;
@@ -294,6 +315,7 @@ public class OperacionesMenu {
             System.out.println("1. Agregar Habitación");
             System.out.println("2. Modificar Habitación");
             System.out.println("3. Eliminar Habitación");
+            System.out.println("4. Buscar Habitación Disponible en Fechas");
             System.out.println("0. Volver al menú principal");
             opcion = scanner.nextInt();
             scanner.nextLine(); // Consumir nueva línea
@@ -331,7 +353,17 @@ public class OperacionesMenu {
                     habitacionService.eliminarHabitacion(idEliminar);
                     System.out.println("Habitación eliminada correctamente.");
                     break;
-
+                case 4:
+                    // Buscar habitación disponible en un rango de fechas
+                    System.out.println("Ingrese la fecha de inicio (formato: yyyy-MM-dd):");
+                    String inicio = scanner.nextLine();
+                    LocalDate fechaInicio = LocalDate.parse(inicio, DateTimeFormatter.ISO_LOCAL_DATE);
+                    System.out.println("Ingrese la fecha de fin (formato: yyyy-MM-dd):");
+                    String fin = scanner.nextLine();
+                    LocalDate fechaFin = LocalDate.parse(fin, DateTimeFormatter.ISO_LOCAL_DATE);
+                    List<Habitacion> habitacionesDisponibles = habitacionService.buscarHabitacionesDisponibles(fechaInicio, fechaFin);
+                    habitacionesDisponibles.forEach(System.out::println); // Mostrar habitaciones disponibles
+                    break;
                 case 0:
                     System.out.println("Volviendo al menú principal...");
                     break;
