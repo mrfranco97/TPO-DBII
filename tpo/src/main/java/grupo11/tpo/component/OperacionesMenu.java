@@ -44,8 +44,6 @@ public class OperacionesMenu {
     @Autowired
     private ReservaService reservaService;
 
-
-
     public void gestionarHoteles(Scanner scanner) {
         int option;
         do {
@@ -162,7 +160,7 @@ public class OperacionesMenu {
                     Huesped huesped = new Huesped(nombre, direccion, telefono, correo);
                     huespedService.guardarHuesped(huesped);
                     break;
-                case 2:
+                case 4:
                     System.out.println("Ingrese Id del huesped");
                     String id_hue = scanner.nextLine();
                     System.out.println("Ingrese fecha inicio (formato: yyyy-MM-dd):");
@@ -173,20 +171,21 @@ public class OperacionesMenu {
                     LocalDate fecha_fin = LocalDate.parse(fin, DateTimeFormatter.ISO_LOCAL_DATE);
                     System.out.println("Ingrese Id de habitacion");
                     Long id_hab = scanner.nextLong();
-                    Reserva reserva = new Reserva(fecha_ini, fecha_fin, id_hab);
-                    huespedService.agregarReservaAlHuesped(id_hue, reserva);
+                    Reserva reserva = new Reserva(fecha_ini,fecha_fin,id_hab,id_hue);
+                    reservaService.guardarReserva(id_hue,reserva);
+                    break;
                 case 5:
-                // Consulta de reservas por fecha
-                System.out.println("Ingrese la fecha de consulta (formato: yyyy-MM-dd):");
-                String fechaConsultaStr = scanner.nextLine();
-                LocalDate fechaConsulta = LocalDate.parse(fechaConsultaStr, DateTimeFormatter.ISO_LOCAL_DATE);
-                List<Reserva> reservas = reservaService.buscarReservaPorFecha(fechaConsulta);
-                if (reservas.isEmpty()) {
-                    System.out.println("No se encontraron reservas para esta fecha.");
-                } else {
-                    reservas.forEach(System.out::println); // Mostrar reservas
-                }
-                break;
+                    // Consulta de reservas por fecha
+                    System.out.println("Ingrese la fecha de consulta (formato: yyyy-MM-dd):");
+                    String fechaConsultaStr = scanner.nextLine();
+                    LocalDate fechaConsulta = LocalDate.parse(fechaConsultaStr, DateTimeFormatter.ISO_LOCAL_DATE);
+                    List<Reserva> reservas = reservaService.buscarReservaPorFecha(fechaConsulta);
+                    if (reservas.isEmpty()) {
+                        System.out.println("No se encontraron reservas para esta fecha.");
+                    } else {
+                        reservas.forEach(System.out::println); // Mostrar reservas
+                    }
+                    break;
 
                 case 6:
                     // Consultar reservas de un huésped por ID o correo
@@ -255,7 +254,7 @@ public class OperacionesMenu {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Ver detalles de Huesped");
             System.out.println("2. Buscar Reservas por Fecha");
-            System.out.println("3. Buscar Reservas por Fecha");
+            System.out.println("3. Buscar Reservas por ID");
             System.out.println("0. Volver al menú principal");
 
             option = scanner.nextInt();
@@ -276,7 +275,7 @@ public class OperacionesMenu {
                 case 3:
                     System.out.println("Ingrese el ID de la Reserva");
                     String id_reserva = scanner.nextLine();
-                    huespedService.obtenerHuespedPorCorreo(correo_hues);
+                    reservaService.obtenerReservaPorID(id_reserva);
                     break;
                 case 0:
                     System.out.println("Volviendo al menú de huespedes...");

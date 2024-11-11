@@ -27,6 +27,7 @@ public class HuespedService {
     }
 
 
+    /*
     public void agregarReservaAlHuesped(String huespedId, Reserva nuevaReserva) {
         // Buscar al huésped por su ID
         Optional<Huesped> optionalHuesped = huespedRepo.findById(huespedId);
@@ -39,6 +40,8 @@ public class HuespedService {
             System.out.println("No existe huesped con ese ID");
         }
     }
+    */
+
 
     public Huesped obtenerHuespedPorCorreo(String mail) {
         System.out.println("Obteniendo detalles de Huesped: " + mail);

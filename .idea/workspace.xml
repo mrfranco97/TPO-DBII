@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1eede5da-9540-4160-826b-6285a844dce0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/tpo/src/main/java/grupo11/tpo/component/OperacionesMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/tpo/src/main/java/grupo11/tpo/component/OperacionesMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpo/src/main/java/grupo11/tpo/repository/HotelRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tpo/src/main/java/grupo11/tpo/repository/HotelRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpo/src/main/java/grupo11/tpo/repository/HuespedRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tpo/src/main/java/grupo11/tpo/repository/HuespedRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpo/src/main/java/grupo11/tpo/repository/ReservaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tpo/src/main/java/grupo11/tpo/repository/ReservaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpo/src/main/java/grupo11/tpo/service/ReservaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tpo/src/main/java/grupo11/tpo/service/ReservaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,11 +39,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging manuel",
+    "git-widget-placeholder": "manuel",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/manue/OneDrive/Documentos/GitHub/TPO-DBII/tpo/src/main/java/grupo11/tpo/service",
+    "last_opened_file_path": "C:/Users/manue/OneDrive/Documentos/GitHub/TPO-DBII/tpo",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>

@@ -21,8 +21,22 @@ public class ReservaService {
 
     @Autowired
     private ReservaRepository reservaRepo;
+    @Autowired
+    private HuespedRepository huespedRepo;
 
-    public Reserva obtenerReservaporID(String id) {
+    public void guardarReserva(String huespedId, Reserva nuevaReserva) {
+        Optional<Huesped> optionalHuesped = huespedRepo.findById(huespedId);
+        if (optionalHuesped.isPresent()) {
+            // Reserva reserva = optionalHuesped.get();
+            // huesped.addReserva(nuevaReserva);
+            reservaRepo.save(nuevaReserva);
+            System.out.println("Se agrego correctamente");
+        } else {
+            System.out.println("No existe huesped con ese ID");
+        }
+    }
+
+    public Reserva obtenerReservaPorID(String id) {
         System.out.println("Obteniendo detalles de Reserva Nº" + id);
         return reservaRepo.findReservaById(id);
     }
