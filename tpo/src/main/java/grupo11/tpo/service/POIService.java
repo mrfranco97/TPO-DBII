@@ -35,7 +35,13 @@ public class POIService {
         System.out.println("Se guardó correctamente");
     }
 
-    public List<POI> obtenerPOIs() {
+
+    public void eliminarPOI(Long id){
+        poiRepository.deleteById(id);
+        System.out.println("Se elimino satisfactoriamente.");
+    }
+
+    public List<POI>obtenerPOIs(){
         return poiRepository.findAll();
     }
 

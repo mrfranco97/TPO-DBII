@@ -29,6 +29,7 @@ public class HabitacionService {
 
     public void eliminarHabitacion(Long id) {
         habitacionRepo.deleteById(id);
+        System.out.println("Se elimino satisfactoriamente.");
     }
 
 

@@ -22,9 +22,12 @@ public class HotelService {
         System.out.println("Se agrego correctamente");
     }
 
-    public void eliminarHotel(String name) {
-        hotelRepo.deleteByName(name);
-    }//Habria que meterle comprobaciones
+    public void eliminarHotel(Long id) {
+
+        hotelRepo.eliminarHabitacionesYRelaciones(id);
+        hotelRepo.deleteById(id);
+        System.out.println("Se elimino satisfactoriamente");
+    }
 
     public void modificarHotel(Hotel hotel,String name, String address,String phone,String mail, String location){
             hotel.setName(name);

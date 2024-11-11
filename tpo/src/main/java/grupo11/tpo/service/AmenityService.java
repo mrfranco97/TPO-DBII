@@ -19,8 +19,9 @@ public class AmenityService {
         System.out.println("Amenity agregado correctamente.");
     }
 
-    public void eliminarAmenity(String name) {
-        amenityRepo.deleteByName(name);
+    public void eliminarAmenity(Long id) {
+        amenityRepo.deleteById(id);
+        System.out.println("Se elimino satisfactoriamente.");
     }
 
     public void modificarAmenity(Amenity amenity, String nombre, String descripcion) {

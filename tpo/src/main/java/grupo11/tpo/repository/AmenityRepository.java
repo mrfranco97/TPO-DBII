@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AmenityRepository extends Neo4jRepository<Amenity, Long> {
-    @Query("MATCH (a:Amenity {name: $name}) DELETE a")
-    void deleteByName(String name);
 }

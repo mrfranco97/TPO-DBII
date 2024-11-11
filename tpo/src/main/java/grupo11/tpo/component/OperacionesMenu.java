@@ -74,9 +74,15 @@ public class OperacionesMenu {
                     hotelService.guardarHotel(hotel);
                     break;
                 case 2:
-                    System.out.println("Ingrese el nombre del hotel:");
-                    String nombre_h = scanner.nextLine();
-                    hotelService.eliminarHotel(nombre_h);
+                    System.out.println("Ingrese el hotel que desea eliminar...");
+                    System.out.println();
+                    for(Hotel hotel3: hotelService.obtenerHoteles()){
+                        System.out.println(hotel3.getId()+". "+hotel3.getName());
+                        System.out.println();
+                    }
+                    Long seleccion = scanner.nextLong();
+                    scanner.nextLine();
+                    hotelService.eliminarHotel(seleccion);
                     break;
                 case 3:
                     System.out.println("Seleccion un Hotel: ");
@@ -211,14 +217,14 @@ public class OperacionesMenu {
                     poiService.guardarPOI(poi);
                     break;
                 case 2:
-                    System.out.println("Seleccione el POI que desea eliminar:");
-                    for (POI pois : poiService.obtenerPOIs()) {
-                        System.out.println(pois.getId() + ". " + pois.getName());
+                    System.out.println("Ingrese el POI que desea elminar....");
+                    for(POI pois: poiService.obtenerPOIs()){
+                        System.out.println(pois.getId()+". "+pois.getName());
+                        System.out.println();
                     }
-                    Long idPoiEliminar = scanner.nextLong();
+                    Long poi_cod_d = scanner.nextLong();
                     scanner.nextLine();
-                    poiService.eliminarPuntoDeInteres(idPoiEliminar); // Llamada para eliminar POI
-                    System.out.println("POI eliminado correctamente.");
+                    poiService.eliminarPOI(poi_cod_d);
                     break;
                 case 3:
                     System.out.println("Selecione un POI: ");
@@ -341,10 +347,13 @@ public class OperacionesMenu {
                     break;
 
                 case 3:
-                    System.out.print("Ingrese el nombre del amenity a eliminar: ");
-                    String nombreEliminar = scanner.nextLine();
-                    amenityService.eliminarAmenity(nombreEliminar);
-                    System.out.println("Amenity eliminado correctamente.");
+                    System.out.print("Ingrese amenity a eliminar: ");
+                    for(Amenity amenity: amenityService.obtenerAmenities()){
+                        System.out.println(amenity.getId()+". "+amenity.getName());
+                        System.out.println();
+                    }
+                    Long seleccion=scanner.nextLong();
+                    amenityService.eliminarAmenity(seleccion);
                     break;
 
                 case 0:
@@ -409,11 +418,22 @@ public class OperacionesMenu {
                     break;
 
                 case 3:
-                    System.out.print("Ingrese el ID de la habitación a eliminar: ");
-                    Long idEliminar = scanner.nextLong();
+                    System.out.print("Ingrese el hotel al que le eliminara la habitacion.... ");
+                    for(Hotel hotel3 : hotelService.obtenerHoteles()){
+                        System.out.print(hotel3.getId()+". "+hotel3.getName());
+                        System.out.println();
+                    }
+                    Long seleccion3 = scanner.nextLong();
                     scanner.nextLine();
-                    habitacionService.eliminarHabitacion(idEliminar);
-                    System.out.println("Habitación eliminada correctamente.");
+                    Hotel hotel3 = hotelService.buscarHotelPorId(seleccion3);
+                    System.out.println("Ingrese la habitacion que desea elminar: ");
+                    for(Habitacion habitacion3 : hotel3.getHabitaciones()){
+                        System.out.println(habitacion3.getId()+". "+habitacion3.getTipo());
+                        System.out.println();
+                    }
+                    Long seleccion3_h=scanner.nextLong();
+                    scanner.nextLine();
+                    habitacionService.eliminarHabitacion(seleccion3_h);
                     break;
                 case 0:
                     System.out.println("Volviendo al menú principal...");
