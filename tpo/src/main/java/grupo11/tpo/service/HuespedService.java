@@ -20,28 +20,12 @@ public class HuespedService {
         huespedRepo.save(huesped);
     }
 
-    public void eliminarHuesped(String id){
-        huespedRepo.deleteById(id);
-    }
+
 
     public List<Huesped> obtenerHuespedes(){
         return huespedRepo.findAll();
     }
 
-    public Object modificarHuesped(String id,String name,String address, String phone, String mail){
-        Optional<Huesped>aux = huespedRepo.findById(id);
-        if(aux.isPresent()){
-            Huesped huesped = aux.get();
-            huesped.setName(name);
-            huesped.setAddress(address);
-            huesped.setPhone(phone);
-            huesped.setMail(mail);
-            huespedRepo.save(huesped);
-            return huesped;
-        }
-        else
-            return "No existe huesped con ese id";
-    }
 
     /*
     public void agregarReservaAlHuesped(String huespedId, Reserva nuevaReserva) {
