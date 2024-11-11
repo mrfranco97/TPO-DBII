@@ -257,8 +257,8 @@ public class OperacionesMenu {
             System.out.println("2. Buscar Reservas por Fecha");
             System.out.println("3. Buscar Reservas por Numero de Confirmacion (ID)");
             System.out.println("4. Consultar Reservas por Huesped");
-            System.out.println("5. Consultar Detalles de Hotel");
-            System.out.println("6. Consultar Amenities de Habitacion");
+            System.out.println("5. Consultar Detalles de Hotel"); // Pendiente
+            System.out.println("6. Consultar Amenities de Habitacion"); // Pendiente
             System.out.println("0. Volver al menú principal");
 
             option = scanner.nextInt();
@@ -407,6 +407,7 @@ public class OperacionesMenu {
             System.out.println("1. Agregar Habitación");
             System.out.println("2. Modificar Habitación");
             System.out.println("3. Eliminar Habitación");
+            System.out.println("4. Agregar Amenity");
             System.out.println("0. Volver al menú principal");
             opcion = scanner.nextInt();
             scanner.nextLine();
@@ -469,6 +470,92 @@ public class OperacionesMenu {
                     scanner.nextLine();
                     habitacionService.eliminarHabitacion(seleccion3_h);
                     break;
+                case 4:
+                    System.out.println("Seleccione el hotel...");
+                    for(Hotel hoteles: hotelService.obtenerHoteles())
+                    {
+                        System.out.println(hoteles.getId()+". "+hoteles.getName());
+                    }
+                    Long hotel_sel=scanner.nextLong();
+                    Hotel hotel_selec=hotelService.buscarHotelPorId(hotel_sel);
+                    for(Habitacion habitaciones:hotel_selec.getHabitaciones()){
+                        System.out.println(habitaciones.getId()+". "+habitaciones.getTipo());
+                    }
+                    Long habitacion_sel=scanner.nextLong();
+                    scanner.nextLine();
+                    Habitacion habitacion_selec=habitacionService.obtenerHabitacionporId(habitacion_sel);
+                    for(Amenity amenities:amenityService.obtenerAmenities()){
+                        System.out.println(amenities.getId()+". "+amenities.getName());
+                    }
+                    Long ameniti_sel=scanner.nextLong();
+                    scanner.nextLine();
+                    Amenity amenity_selec=amenityService.obtenerAmenitiesporId(ameniti_sel);
+                    habitacionService.agregarAmenity(habitacion_selec,amenity_selec);
+
+                    break;
+
+                case 0:
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+
+                default:
+                    System.out.println("Opción inválida. Intente de nuevo.");
+            }
+        } while (opcion != 0);
+    }
+
+    public void consultasEspecificas(Scanner scanner) {
+        int opcion;
+        do {
+            System.out.println("--------------------Consultas Especificas:-------------------------------");
+            System.out.println("1. Detalles Hotel");
+            System.out.println("2. Amenities de una habitacion");
+            System.out.println("0. Volver al menú principal");
+            opcion = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Seleccion el hotel... ");
+                    for(Hotel hotel : hotelService.obtenerHoteles()){
+                        System.out.print(hotel.getId()+". "+hotel.getName());
+                        System.out.println();
+                    }
+                    Long seleccion = scanner.nextLong();
+                    scanner.nextLine();
+                    Hotel hotel_seleccionado=hotelService.buscarHotelPorId(seleccion);
+                    System.out.println("-----------------------Detalles:---------------- ");
+                    System.out.println("Nombre: "+hotel_seleccionado.getName());
+                    System.out.println("Direccion: "+hotel_seleccionado.getAddress());
+                    System.out.println("Mail: "+hotel_seleccionado.getMail());
+                    System.out.println("Telefono: "+hotel_seleccionado.getPhone());
+                    System.out.println("Ubicacion: "+hotel_seleccionado.getLocation());
+                    System.out.println("--------------------------------------------------- ");
+                    break;
+                case 2:
+                    System.out.println("Seleccione el hotel...");
+                    for(Hotel hoteles: hotelService.obtenerHoteles())
+                    {
+                        System.out.print(hoteles.getId()+". "+hoteles.getName());
+                        System.out.println();
+                    }
+                    Long hotel_sel=scanner.nextLong();
+                    Hotel hotel_selec=hotelService.buscarHotelPorId(hotel_sel);
+                    for(Habitacion habitaciones:hotel_selec.getHabitaciones()){
+                        System.out.print(habitaciones.getId()+". "+habitaciones.getTipo());
+                        System.out.println();
+                    }
+                    Long habitacion_sel=scanner.nextLong();
+                    scanner.nextLine();
+                    Habitacion habitacion_selec=habitacionService.obtenerHabitacionporId(habitacion_sel);
+                    System.out.println("-------------------------Amenities--------------------------");
+                    for(Amenity amenties : habitacion_selec.getAmenities()){
+                        System.out.println("-"+amenties.getName());
+                        System.out.println();
+                    }
+                    System.out.println("------------------------------------------------------------");
+                    break;
+
                 case 0:
                     System.out.println("Volviendo al menú principal...");
                     break;
